@@ -45,7 +45,7 @@ a{color:var(--sea)}
 .cd-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--ember);line-height:1}
 .cd-unit{font-size:.8rem;color:rgba(35,63,138,.75);margin-left:5px}
 .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.chip{font-size:.72rem;padding:6px 12px;border-radius:20px;background:#fff;color:var(--basalt);border:1px solid var(--line)}
+.chip{display:inline-flex;align-items:center;min-height:36px;text-decoration:none;font-size:.72rem;padding:6px 12px;border-radius:20px;background:#fff;color:var(--basalt);border:1px solid var(--line)}
 .chip b{color:var(--ember-deep);font-weight:700}
 .hero-tiles{height:12px;margin:22px 0 0;background:repeating-linear-gradient(90deg,var(--basalt) 0 14px,var(--lemon) 14px 28px,var(--ember) 28px 42px,var(--sea) 42px 56px)}
 
@@ -120,6 +120,11 @@ a{color:var(--sea)}
 
 /* QUICK REF */
 .ref-card{background:var(--basalt);color:#f5efe6;border-radius:16px;padding:18px 16px 8px;margin-top:40px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.ref-head{display:flex;align-items:center;justify-content:space-between;min-height:44px;cursor:pointer;padding-bottom:10px}
+.ref-head .chev{color:var(--lemon)}
+.ref-card.open .chev{transform:rotate(90deg)}
+.ref-body{display:none}
+.ref-card.open .ref-body{display:block}
 .ref-card h2{font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;font-size:1rem;color:var(--lemon);margin:0 0 4px}
 .ref-sec{border-top:1px solid rgba(255,255,255,.12);padding:12px 0}
 .ref-sec h3{font-size:.85rem;margin:0 0 6px;color:#fff}
@@ -162,9 +167,9 @@ footer{text-align:center;font-size:.7rem;color:var(--muted);padding:22px 0 0}
       <div id="cd-numwrap"><span class="cd-num" id="cd-days">--</span><span class="cd-unit" id="cd-unit">days</span></div>
     </div>
     <div class="chips">
-      <div class="chip"><b>Palermo</b> · Delle Vittorie</div>
-      <div class="chip"><b>Ortigia</b> · TBD</div>
-      <div class="chip"><b>Taormina</b> · Villa Taormina</div>
+      <a class="chip" href="javascript:void(0)" onclick="jumpToDay('palermo')"><b>Palermo</b> · Delle Vittorie</a>
+      <a class="chip" href="javascript:void(0)" onclick="jumpToDay('ortigia')"><b>Ortigia</b> · TBD</a>
+      <a class="chip" href="javascript:void(0)" onclick="jumpToDay('taormina')"><b>Taormina</b> · Villa Taormina</a>
     </div>
     <div class="hero-tiles"></div>
   </div>
@@ -506,7 +511,8 @@ footer{text-align:center;font-size:.7rem;color:var(--muted);padding:22px 0 0}
 </div>
 
 <div class="ref-card" id="quickref">
-  <h2>⚡ Quick Ref</h2>
+  <div class="ref-head" onclick="toggleDay('quickref')"><h2>⚡ Quick Ref</h2><div class="chev">›</div></div>
+  <div class="ref-body">
 
   <div class="ref-sec">
     <h3>⚠️ Still to book / decide</h3>
@@ -586,6 +592,7 @@ footer{text-align:center;font-size:.7rem;color:var(--muted);padding:22px 0 0}
       <li>Morning sightseeing is essential for exposed sites (Agrigento, Etna)</li>
       <li>Best beach time: late afternoon or early morning</li>
     </ul>
+  </div>
   </div>
 </div>
 
@@ -711,7 +718,7 @@ WX_LOCS.forEach(function(loc){
 function toggleDay(id){document.getElementById(id).classList.toggle('open');}
 function jumpToDay(id){
   var el=document.getElementById(id); if(!el) return;
-  if(el.classList.contains('day')) el.classList.add('open');
+  if(el.classList.contains('day')||el.classList.contains('ref-card')) el.classList.add('open');
   el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 var navLinks=[].slice.call(document.querySelectorAll('.ql')),lastAct=null;
