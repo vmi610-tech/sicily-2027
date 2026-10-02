@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sicilia 2027">
+<meta name="theme-color" content="#2b4ba0">
+<link rel="apple-touch-icon" href="sicily-icon.png">
+<link rel="icon" type="image/png" href="sicily-icon.png">
+<link rel="manifest" href="manifest.json">
+<title>Sicilia 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --basalt:#233f8a; --basalt-2:#233f8a;
+  --aqua:#a9dcd6; --aqua-soft:#d9f0ec;
+  --ember:#d6334a; --ember-deep:#b02339;
+  --sea:#1f7f86; --sea-light:#8fd3d9;
+  --lemon:#f2b632; --cream:#faf5ec; --limestone:#efe6d6;
+  --text:#2a2320; --muted:#7a6f66; --card:#fffdf8; --line:rgba(42,35,32,.12);
+  --green:#2f7d5b; --amber:#c98a0a; --shadow:rgba(28,25,23,.12);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--cream);color:var(--text);font-family:'DM Sans',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%}
+a{color:var(--sea)}
+
+/* HERO */
+.hero{position:relative;text-align:center;background:var(--cream)}
+.hero-top{position:relative;padding:calc(26px + env(safe-area-inset-top)) 20px 96px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='1.5'%3E%3Cpath d='M28 4L52 28L28 52L4 28Z'/%3E%3Ccircle cx='28' cy='28' r='7'/%3E%3C/g%3E%3Cg fill='%23f2b632' fill-opacity='.4'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='56' cy='0' r='3'/%3E%3Ccircle cx='0' cy='56' r='3'/%3E%3Ccircle cx='56' cy='56' r='3'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,#2b4ba0 0%,#1b3270 100%);background-size:56px 56px,auto}
+.hero-kicker{font-family:'Cinzel',serif;font-size:.74rem;letter-spacing:4px;text-transform:uppercase;color:var(--lemon);font-weight:700}
+.hero-ring{position:absolute;left:50%;bottom:-62px;transform:translateX(-50%);width:132px;height:132px;border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--lemon),0 10px 26px rgba(20,35,90,.4);overflow:hidden;background:var(--aqua)}
+.hero-icon{width:100%;height:100%;object-fit:cover;display:block}
+.hero-body{padding:78px 20px 0;background:linear-gradient(180deg,#c6e8e3 0%,#e1f3f0 100%)}
+.hero h1{font-family:'Playfair Display',Georgia,serif;font-size:2.7rem;font-weight:800;margin:0 0 2px;letter-spacing:.5px;color:var(--basalt);line-height:1.1}
+.hero-meta{font-size:.82rem;color:rgba(35,63,138,.75);margin-top:4px}
+.countdown-strip{display:flex;justify-content:center;align-items:baseline;gap:10px;margin:16px 0 14px}
+.cd-label{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;color:var(--basalt);font-weight:600}
+.cd-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--ember);line-height:1}
+.cd-unit{font-size:.8rem;color:rgba(35,63,138,.75);margin-left:5px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{font-size:.72rem;padding:6px 12px;border-radius:20px;background:#fff;color:var(--basalt);border:1px solid var(--line)}
+.chip b{color:var(--ember-deep);font-weight:700}
+.hero-tiles{height:12px;margin:22px 0 0;background:repeating-linear-gradient(90deg,var(--basalt) 0 14px,var(--lemon) 14px 28px,var(--ember) 28px 42px,var(--sea) 42px 56px)}
+
+/* NAV */
+.quick-links{position:sticky;top:0;z-index:50;display:flex;gap:8px;overflow-x:auto;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:rgba(250,245,236,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.quick-links::-webkit-scrollbar{display:none}
+.ql{flex:0 0 auto;min-height:36px;display:flex;align-items:center;padding:0 14px;border-radius:18px;font-size:.78rem;font-weight:600;color:var(--basalt);background:var(--aqua-soft);text-decoration:none;white-space:nowrap}
+.ql.region{font-family:'Cinzel',serif;letter-spacing:1.5px;text-transform:uppercase;font-size:.72rem}
+.ql.active{background:var(--ember);color:#fff}
+.ql.ref{background:var(--lemon);color:var(--basalt)}
+
+.container{max-width:720px;margin:0 auto;padding:18px 14px 110px}
+
+/* REGION LABELS */
+.island-label{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ember-deep);margin:40px 0 12px;display:flex;align-items:center;gap:10px}
+.island-label:first-child{margin-top:8px}
+.island-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--ember),transparent);opacity:.35}
+.island-label.sea{color:var(--sea)}
+.island-label.sea::after{background:linear-gradient(to right,var(--sea),transparent)}
+.island-label.lava{color:var(--basalt)}
+.island-label.lava::after{background:linear-gradient(to right,var(--basalt),transparent)}
+.region-note{font-size:.8rem;color:var(--muted);margin:-2px 0 10px}
+
+/* WEATHER */
+.weather-strip{margin:8px 0 12px}
+.wx-card{border-radius:12px;overflow:hidden;position:relative;min-height:72px;display:flex;align-items:center;padding:10px 16px;box-shadow:0 4px 16px rgba(0,0,0,.25);background:#1a6bb5}
+.wx-canvas{position:absolute;inset:0;width:100%;height:100%}
+.wx-content{position:relative;z-index:2;display:flex;align-items:center;gap:14px;width:100%}
+.wx-temp{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1;text-shadow:0 2px 6px rgba(0,0,0,.3);flex-shrink:0}
+.wx-right{display:flex;flex-direction:column;gap:2px}
+.wx-desc{font-size:.78rem;color:rgba(255,255,255,.95)}
+.wx-meta{display:flex;gap:8px;flex-wrap:wrap}
+.wx-detail{font-size:.66rem;color:rgba(255,255,255,.7)}
+.wx-loading{position:relative;z-index:2;color:rgba(255,255,255,.5);font-size:.72rem}
+
+/* DAY CARDS */
+.day{background:var(--card);border-radius:14px;margin-bottom:12px;box-shadow:0 2px 10px var(--shadow);overflow:hidden;border:1px solid var(--line)}
+.day-head{display:flex;gap:14px;align-items:center;padding:14px;min-height:64px;cursor:pointer}
+.date{flex:0 0 52px;text-align:center;background:linear-gradient(180deg,#e0415a,#c42a41);color:#fff;border-radius:10px;padding:6px 0}
+.date .dn{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1.1;color:#fff !important}
+.date .dm{display:block;font-size:.6rem;letter-spacing:2px;color:#fff;opacity:.9;font-weight:700}
+.dt{flex:1;min-width:0}
+.dname{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.dlabel{font-weight:700;font-size:1rem;line-height:1.25;margin:1px 0 5px;color:var(--basalt)}
+.strip{display:flex;flex-wrap:wrap;gap:5px}
+.chev{flex:0 0 auto;font-size:1.5rem;color:var(--muted);transition:transform .25s}
+.day.open .chev{transform:rotate(90deg)}
+.day-body{display:none;padding:2px 14px 16px;border-top:1px solid var(--line)}
+.day.open .day-body{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+.b{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:10px;white-space:nowrap}
+.b-booked{background:#dff3e8;color:var(--green)}
+.b-soon{background:#fdf0cf;color:var(--amber)}
+.b-open{background:#ece7df;color:var(--muted)}
+.b-travel{background:#dcebf2;color:var(--sea)}
+.b-star{background:#fde4da;color:var(--ember-deep)}
+
+/* EVENTS */
+.ev{display:flex;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.ev:last-child{border-bottom:none}
+.pill{flex:0 0 58px;align-self:flex-start;text-align:center;font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.5px;text-transform:uppercase;background:var(--limestone);color:var(--basalt-2);border-radius:8px;padding:5px 2px}
+.evb{flex:1;min-width:0}
+.evt{font-weight:600;font-size:.93rem;line-height:1.3}
+.evt .ic{margin-right:5px}
+.evt .b{margin-left:6px;vertical-align:1px}
+.evn{font-size:.82rem;color:#5b514a;margin-top:3px}
+.evn ul{margin:4px 0 0;padding-left:18px}
+.evn li{margin:2px 0}
+.booking-link{display:inline-flex;align-items:center;min-height:36px;margin-top:6px;margin-right:12px;font-size:.78rem;font-weight:600;color:var(--sea);text-decoration:none}
+.warn{color:var(--amber);font-weight:600}
+
+/* QUICK REF */
+.ref-card{background:var(--basalt);color:#f5efe6;border-radius:16px;padding:18px 16px 8px;margin-top:40px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.ref-card h2{font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;font-size:1rem;color:var(--lemon);margin:0 0 4px}
+.ref-sec{border-top:1px solid rgba(255,255,255,.12);padding:12px 0}
+.ref-sec h3{font-size:.85rem;margin:0 0 6px;color:#fff}
+.ref-sec ul{margin:0;padding-left:18px;font-size:.82rem;color:rgba(255,255,255,.82)}
+.ref-sec li{margin:4px 0}
+.ref-sec a{color:var(--sea-light)}
+.ref-sec .warn{color:var(--lemon)}
+
+/* BOTTOM BAR + MAP */
+.bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:100;display:flex;justify-content:center;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(250,245,236,.98) 60%,rgba(250,245,236,0))}
+.map-btn{min-height:46px;padding:0 26px;border:none;border-radius:24px;background:var(--ember);color:#fff;font:700 .9rem 'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(228,87,46,.45)}
+.map-outer{display:none;position:fixed;inset:0;z-index:200;background:var(--cream);flex-direction:column}
+.map-outer.active{display:flex}
+.map-top{display:flex;gap:8px;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:var(--aqua-soft)}
+.map-tog{flex:1;min-height:40px;border:none;border-radius:20px;background:#fff;color:var(--basalt);font:600 .78rem 'Cinzel',serif;letter-spacing:1px;text-transform:uppercase}
+.map-tog.active{background:var(--ember)}
+.map-close{min-height:40px;padding:0 14px;border:none;border-radius:20px;background:var(--lemon);color:var(--basalt);font:700 .8rem 'DM Sans',sans-serif}
+.map-frame{flex:0 0 42%;border:none;width:100%;background:#ddd}
+.map-list{flex:1;overflow-y:auto;padding:8px 14px calc(20px + env(safe-area-inset-bottom))}
+.map-item{display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.map-item .mn{flex:1}
+.map-item .mt{font-weight:600;font-size:.9rem}
+.map-item .ms{font-size:.74rem;color:var(--muted)}
+.map-item a{font-size:.74rem;font-weight:700;color:var(--sea);text-decoration:none;padding:10px 4px}
+footer{text-align:center;font-size:.7rem;color:var(--muted);padding:22px 0 0}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-top">
+    <div class="hero-kicker">Palermo · Ortigia · Taormina</div>
+    <div class="hero-ring"><img class="hero-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOmQ5NTVhMjc0LWNhYzYtNDI0Yy05MDU1LTM1OWI2NmU2OTM2NwAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoXlRNvXSoaug+Fyz5fvvjHAAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6ZGQ4YWMxNzQtYmQ3Zi00OGQ3LWI3NWMtNzA4ZDI0MTBiMzZhbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaDRQQqnnQBgMdw1RN/3VcjIAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIAtSl6B6Zw+G8LgjFC6rL63RDG6jFclZQl4g/G+niGyPpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2iFAU64AJfa0GMjsYEPU17RAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggIbADdeTouhe/Ze3EiUitnzrgs3n9oLRQHYhLIKj351pkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTpkOTU1YTI3NC1jYWM2LTQyNGMtOTA1NS0zNTliNjZlNjkzNjcvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo0MWEzMGQ1YS04ZGI3LTQyODYtODAwNC04YzZiNWUxMjhjN2VyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggC1KXoHpnD4bwuCMULqsvrdEMbqMVyVlCXiD8b6eIbI+iY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIHG4iPT92Rpd3fNTcmirtYk+W5/Yr9NSqfzsrKLAyOquomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYILO+aInny1Z3/HyaodYn0hiicrQxZGXjhz94fea/o6W6dGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2WED/iQZITvbJ1HmjiJgWFMzI/i0EMaPzfv9g9QGd4+kw3B0JNViHXC07OYyM9F3Ggb6DbvQxW4iw+hSnmXt+MnzpuKMPagAAAAZiS0dEAP8A/wD/oL2nkwAAIABJREFUeJztnXdgW+W58J+zj/awJO/teGVPEkgYSRgNCZQNLdBCezu+Dnq/cnfL19723ra0UGjvBVpaCrdwoYWWPQIhk5A4y2Q43nvJ2vPo7PP9IcdxbOlIluVEof79ZUvvefVKevSe530m8qeu0zDPPIlAL/QC5sld5oVjnqTMC8c8SZkXjnmSMi8c8yRlXjjmScq8cMyTlHnhmCcp88IxT1LmhWOepMwLxzxJmReOeZIyLxzzJAW/0Au4kCCyrO3s157uoQdGSZcPZXkAkGmSd1jZskJmYTVTU6agf7u/H+Rv02VP+EN57+yz7DuK+0Mqw0SL0X/5Ss9nNogW43lbW+7wNyccCCc4/rrD/vYeRBDTvEQmCO/Wy8du2qxQxJyuLdf42xIOum+07PE/UiOuDK7lih0D37mHLSvM+qpylr+hG6r+ZGf1//uvzCQDAKhhV/X3fm34pC27q8pl/laEQ3+io+Knv0NZbjaToBxf/vM/6E92ZmtVOc7fhHBQw67yR55DRGn2UyGiVP6LZzPefi4uPv3CgYhS6ePPz3LPmAzKcmWPPY9IWRC1HOfTLxy2t/Zo+keyOyfdP5L3zkfZnTMH+ZQLBxZjHW/snIuZHX/dgTGxuZg5d/iUC4dlRxMaZediZoyJWXYdmouZc4eLxnyOshw15sVCUQCQNRRvt4omfcqrLHsOp54aQYzlZabKCspiAgDOHwz29IYGBkFR1K8z7znquf6KlNPjwQjp9qExDgAko47Lz5NpKvWqcoBcFw5N96Bl31H9iQ5qeOoBQTTpI4sWBC9dFl5er2DY9GsJt58edKrPj+J4yeUbdEUFZ6/S6vTFRaaRkeF9H8uCoLa2/hHC7RfslulPIZJkONpqOvCJoaULC0amPMuV5EeW1AbWr2CqS9WXd2HJXQspPejMf/Ed49HUyxPsFtdnN/k3XqKgyOTHLXuPlPz3S+rXlly5wVBSkvCp8MDQ0N596pcPfvNzgQ0rznlIUUxNJwtefId0elKuPLJ4gfPzW2OVxSlHXhBycedABaHo969adh9OubHHIdz+4qdfsew6NPidu3m7deJxanBM/UJdYUEyyQAAQ1mJNj+fGVObhBo651nS5S177HlN92A6y4a40fZfH/NfdcnofTfKRM45bnJOIcX9ocofPGnZdShNyZhA2zVQ88+P6Vu6Jh4hfEH1S4xlKXZ1Y0WZ+gDS65/4W9feW/O9X6cvGXEQWbF+eLDq+/9FeAMzuvA8kFvCgftDNd/7lbZrILPLsQhT8Z9PT7g/4jqgCqQxhSOeMhpSvCIzfhQyNLdW/vCp6epFmmh6h6sf+i/1+IHzTw4JByoI5Y88R3hm9QNCRKnsl3+khpwAAOeqINNRJFl9gJzKDCrjGABQw66yX78wS5sp4QlUPPwMyqupwOeZHBKOot+/qu3sn/08KMuV/+I5lBckLa0+Mubzqg9gvT71AbKWRjih4uFnsmJN0fQMFT73+uznyRa5Ihx036g5HZtEelCj7rx3P+Lz89SHBbt7FTnp5qHIcqC7V30GLt9me2dvOgeTNLHsbNL0DmdrtlmSK8JR+PwbiDwzDVQdx+sfcvk29TF8OOw+fiLZs67mE0IkhQ4hOKz2N3ZnsLxkILJS8Mc3szjhbMgJ4dB0D2Y9SAKNstSoJ2V4sLeldezwUVk8J2RQFgTn4SO+1tZUr4HSg86se1j0LV1Z9xRmRk7YOSz7jqYcYygrsdbV0nl5CILyoVCwt8/X1qHIajqg4XhbZPECw/F29Zl97R2h/gFDeSllNoOicIFgeGBQZFPrEOGldaaDx9XHIChmbagzVZaTBqMiSzGvz9/eER4cUr/KcLglVl6UcgFzTU4Ih/5Eh/qAgtUrLXW1E/9SFrPDssxYXta/Y5cs8Mmu0nQPDH/5lpTCAQAiy/rbZ7x1hVc2Gn73F5UBGEmUbdpI543b5RAM1RXk6wryfW0dY0fUfg/GI6dct1490/VknQt/W0FZjhpxqwwwVpRPlowJ6Dxr/qplKhcisqLoNFyxY7ZLTARbUiBpNepj8leunJCMyVjra41lauY1Td9IFqOTMubCCwfl9KgbQy21NcmeMlVUoqpWZ8LpHf3CjZkvLjnOe7YSLrWTMEqQxsryZM9a6pK+KQAARSGdKU7R54ELLxxoJIVCR1sSuD3jIBhKmUwq12JMLLy0zn/5qgwXlwT/VavDy+pxVVWUMpuQ5OowZUmwo0wGZ5gMF5c9LrxwIKl8KCofccpnQVIAYORLN2VRv2PLi0buu2li8uQLU7PPplg2AKSy3p4HLrxwyJoUkS98OLmxQVH4SFjlWm1nv/3VD01NJ923Xp3SJpYOfH7e2K1Xmw6esL/6oUbVBySEo6rPqi0bACRNCvPueeDCn1YmO9kTEurrty9bkvApxu0WVfd2XXuvrn3cyinraEmvwVLdxVSQ9Fo8Ei1/5Ll0BgtMlHG5tQ57wmeDfSkcBUJ+io/lPHDhdw7RpFcP+PO1tSX0ccgC72w6kv4LoVH2jGSkcMglA4swM/KhOA8dSXjSjnm9vja1A7aQZxYNuhmvL9tceOEAgMiiBSrPyqLUv2Onv7NrshM1Ourse+8DLpgiYiMJijIT8ZjR4MlwgUDf9h2Tw4UUSfZ3dA7s2KWounBDqxZm+JJZ5cLfVgAguG6peX+zygBZEJxNh13HPokfAfhQWIzNymiNKKAg0G8j7GFRxybWK6M04jHgZR4BmYXPhwsE+z/YiWs1pMGgyDLnD0wx1ScktHpR5i+ZPXJCOMIrGvgCW0rfpiwIMXfW/J+IAuUe4dmN5mErXuQT7SGREgAAOALcRnzEQuQHhS/vCMxGMiYQmZi6bjQZvtAWbazKwqvOmvMnHD7G2+fudkdcrMgqskwRtJ7S2/QOuyE/T2dz3nFd2ePPn7fFxEEU+PzuwMM32Q8tmGrrLPUIX9iZHcmYKaN3bZFR1Btxu8JOT8Qd5SKcwCIoqsFpm95Raa+xaM+Trno+hEMB5aPOXSeHP1GSmDS0pK7SWnlPZb65N0VIcNYhJbjj4+AjN0w95d72cYi8EMmw/qqCN4yjPR/vj/EJjGCdrvaDvfuXlCy7rOZKJFO1On3Oh0LaMnz8xFBzMskAAIaPtjhPPXypEtVegNvcghF+cf85jowl/VztSFJ/3tzB0Nija+UW56mEkhFHUeTjg8dahpOGoWSR8yEcPZ6u1IMAfAbsiWtMYoLspDln04nIuf+q2a/mCAlFnrrG7Dam9f573Gl9pLPkfPxS098AuwvIJ661/t2OgIaflfEYQVFLXZ2hpJAwGMQoE3WOeU+3qqSvLRgVtJzMUCgA6Dh5geq2gRJEXmODriAf12mFcDg8NOpvb1cJN0yHGIU8vcnSUUSmOV7dNp8tsNu+/Y25fo0QGxoOpJvN4TbhxyvphkFez2X4cSMoVrbpKsuCakKvxwiC0Gm1+Q5jWUmof0BJUr8FVWDITo5YcQBY3suu6Elq6cJoqvK6qw1lpYROixEEodfriwq0Dkeob2CmiTYTOM3449vyevPTlQwAKDOV4wrq8o26/KMRJiRKIoYROJbln/r52DkWFy891n9IlNMNunea8R/dbr/8dHTbkbCGm/Enbm2o1eZPjeEgjUbH0iWjTUljmPP9AgANAPkBNUXUsXTJ9GwXbb7DWl/rPZ0qrHAaDIVuX67ftVjHp3UzUYQoK0RiIst/1Ds6vTzIivpLr1n3WRTJmqpwPnYOHCM0pKbP25P+JTIKvfnkRw06hkZpQTEzUvrbaMGqlXiiMBzCYPC2JM281dU0WK6+vr5g4bJWv2EgaVWn4vXrkERJ2xhJBrq601yhgkBvAbFrke65jebWEkpK49sUo2zU5efDMVmQIMnvZdQzODTWW1uxOFtbyHk6HSwsWjIaGG4fm1nSdpRGti/TbV+mMzFSvQe5Uteo5wFRFG1bn7ajL9lVuE6b8HGMJFCCSKZ5GBixxFIKAHo26e0MJQiUSLz5J3vROExdBVNXoSBIhITdkdOtdghp0/59K0rME+TT8xf2jXa9tuuPt119f1b2j/N3dNzUcK0McudYJqUag1qsqQw6te5bV91NYLj91Q9VhENiOZxO4O+WRUnFdC2dcXRJhqRfsyyKiiQl3Dkk1YDk0IpG92c3irLw58PP+5kZfG2KLEfH/BI7g3N191DbzkNvbb7khvQvScb5c7whCLq5YcvikuUZz+BjvEf7DwCAerHpyHDipKDI8IiKzihYxyPKRHPyyRUlnGzyIbVkAtFqBIDDvQf8zMyC/xh3cEaSEedw60cuXxaSG86rVxZFkMsXbNxYfy2BZVhu4OTQcV7ieNVsJe/pVj40NSNZYjlX8ycqV/GOcZs0pxoT5G4+Lk0L/eVDIe9ptTsm58jjRO7UcIo8hinEfCGRySTLUpHlXUffzeDCKVwAl31D4aLPr72/0ladwbW8xLlCrmhduaRPuvlLHN+3/QN/Z5fARAFAZNlQX3/ve9tV0tcUFAkvq4//HV7RqCS3IvDhSO9720N9/fHEFoGJ+ju7+t7bISVPgJb0Wqa23BUe5aUZ7AFCjOODmdvieobbGTbDlP8JLoxXVkfqtyz+bI+nq6lnvy86M0crL7KAouHl9eZ9x5KNkTje2XQYABAMTZlKDwBMTbloHq+2IJr0sapSlTIQQiQ6/NHH6U8eWtkIKMonz69JgKJw3lmVY1BkuXPg9NLaNbOZ5EK67KtsNZV51Z2uthNDzWOh0XQuITC8wFQEAL6r16kIxwRJvzyKQKocUGRFisxQaNGUOBaGe1FFAgAZweDb16BDLhj1w7BfGfUrPS7gEmwM6UgGIIhv8zoAKDAVExguSGm1aiB5XEq7qUMyPIHZllm+wPEcCILU5jfU5jd4Iu4256led3eITRrchaPEpobrtKQOAKJ1laHVi4yHT83s5RwmZHkFsqgUagoBO3vvIADgjI0OU2SgUagpgJoCiEcUirLSNQqnBpXmPsU9sx90cM1iprYcAHSUbmP9dR+2blcxBhppU6W9psZe9+JbT83oVRISjs62VFBOBPsAgE1vX19z1fqaq7wRtzM06g6P+Rgvy8cEiScxSkvri82l9QWNesoAAJjCOCK7Tbd2WBtPIGh6vzCDBrHoQEsB0gEAEEYwDEdQFEUxBMUQBAFAEAQA4gcaRVFkRZZlWVJkWZJEKFCgAGATAMMqfgbCaVkdFBlTGg02Zr9Xs1ZBsBpHXYGpqM15etg/wHBRXuIIjKRJjVWbZzfkF5qKrDobALR0H4txWfD8ifJs957crSaYjMLwuw2eX1Bi1kLCzgMhquFk/r+HqARJndN5/p0nB5zpGltVWFZ7yZb1t81mhlzZOdKk0v9sveeXWZ82NkL5jpg4JwkAVCFnXRXSFGYzVdXItV4ydN/Rol/7NCvURwYivsGxGfgZVNDSqYv4qjPnvpUwExxx9TNs1KA1jW/cmWJjmpa4vo8kcy1kytiHeQN/KowN0nyA4ANEbFDjO2QGBPSV2Sy8gSq8I7p31PAZEVX7zmhSYzZYe4c7ZNXqEumwdvGVeaZZJZHP4c7R3n+q6dSeobHxnKICW+ndW75G4plXdq7z/BJRspwkGGg2ju2YZvVSYOyDPMrGm5ekyEubEaTkr/M+djz/J+rDFtesKrKXvb77Bac38/pPCIIUO5KmcafJnBjBAhHf8+88+ZcPn52QDABwegaPtR7IeE4d32fkZuwTT4lrT9JgXdeu7MfxFoa2k1JqC3qeyfHFGx64dt3NGirD1Kb8vJLZ31ayv3N0DrS8ufdFlk9g93V6U1S0UcHIpa7BMlMkFmPHkobYsE5KZjGUzmacMQKSNdbs1G9KORJF0JUNly6sXnHgxIfNbQcSfp4qLF2QhcICWRaOY20fbz/4WrKYudn4kXF5tsbg6chsCh1IYhE02/nMhORPPegMNElfter69cuuPtl1tLntwFh67jQcwxurMndwnp1n9lNMcKhl344mtTKaNkt+xpMzRPZrZGF6GcEUJUkgEYIpmD776Qkcnji1WgUCJ1fUr1tRvy4UCXQNtfaNdPpCHl/QLUpn7WkUqTEZzIV5pRWFNeWFCzSUWnxJmmRNOFp6mj889Ib6mPJC1XI2qvg1K0XMgEvZ1BBRXNZXM+GOxPd1fQ2D4lk+GSmA+TVLJ/6Vg4zkj6JGDWZNrB8osiy5Qoog4g4TQhFGvTkuJQCgKArHs7IiscEwGZI0ZiNmM0DC86CiSJ6wzHCYzYjqZnAgyI5wOL3Db+/7s0pmCgBYjbYiW4o68yrICNlrvneB978zniEhBdd5Ir0aRZh6v0NJufC67NvZRg1XC6gZAGIHOiIvf8x3jbeDwYut+pvW6K5eOvHtylEu8tL+6M4TcpgFAATHqFXVxnsuJ0rHwxUQBEG6vcwL+7jTgzFJDgJgeQbd9Sv0N65BiPFwJEWQIq8dir5zTPKGAQAwlGosNd69gWxI2itiMlmwc3B87MX3fpPSQXz5imuL7JkLBwAE6MU25iAtZrNtJ2GQ9BWxaK9Wip2N7yKtQvnnR7UlWe7/xWOW5sJHRFQffG5X8Lc7JN/ZT0wOx9hDXdKwT7O2FlBE8oQ9//xH9ki3wp8xgcuKOORlPjxJVhfgRRYAiL73ie/h1yRnYCKCSYnx3PF+/tSAZn09gmNyjPd+/0/MzpNK7IxDWFEkV5DZdQqz6sjqAkhFFoTjw0Nv9gynqBVp1Jm3brgTnVbrCFM4C3vcGjuSH91liTWbuBZM5njcpiAJtjQFwVz6K23MYUpSqz44U0iLmLcuqC9n6SLOsIBxbAgUXu8mLVkuUM9jlmNFj0XIGmbnqdAfdpUVFddWVZmMRn8wOLHjCgMeBEWohaWeh17ERkONCxaUFRXJshSZqA8myeyhTs0VjUK/x/fwa/nWvIaamjyLJRgOSWdqOkjukOgOatbV+R9/W/qkt76mpqK0FMPx0EQtIUVhj/bQy8oxW4qmEbO9rYy6B4+1pbZebL7khskh0SiI+eH3i8Lv2WJNqDz1ByqjdJ/5c92W+0V0akcLHrMeLPlDte/p8uBLWTy/IKiir43qa+ck0U0BzGm4ps32HRYvAFkJPb+HwPEChx0ADDqdxWTy+M5aPsJ/PYgVWoROZ0lhoYamAaC4oMg5qbaAHOMjLx8QR/wgySUFhSiKamjaZs0bHj0b8xDb0xpbVxfb12q3WPQ6HQAU2u3OMZcgnpF4SQ69sM/2o7vUVz5b4dhz7D11VQMAassX1VeM121CFb488L8VgRdU7g6ozFb5nsmP7GwqeYbDppovJZTusH3LZby7LvgBrgQstiIs28k8WUGSRL97SERN7aarAuT4Hi70jkmesIKioiThGAYAHH9OEJDCicwHJwCAP/M4L0z18rCHOqVQDAA4ntNqNJMHn5lFib7bDIoyMbkoSdK5Tlru1KDCcIhWTT+d1cc65hvpGU5hmzLpLdevvz3+t41panT/h45Pq2+Gju9bOfLtj0ufT1ilqZAPcuQyY2E1ac78eDynYABavdM92lPAsUFCURAEACR3CABkWW7r6sozm6MME54WvCh5QgDg8vkUAIok3d6p1U4l//gO19nXa7faOJ7zTOsNInnCABCKRLr6+nQajTcQkKf0HZBk0RMmyuZMOE52pijJReDkLRvv1VBaBKR6z6MV/plV4DCxpxzRvS7d1PaceVyAknhKYzDkqmTEMZgLQgEXxCJWIeQlTQCA0OMGWSYWY5IUJ0JoAgBAUaaLxfgAHFVEGQA4jh8aTWwWm3ghXyDgCySO+kFVtw2YpW+la0jN2YGh2C2bvlBgKyUl/+qhr85UMuLkR3ZNeQQFuZD3AoB1dmef80OeoxwACjgvCgoAEAsKETxF6iO5JIXDjGwoxfJS9Bejl6aYBMszYHkpnC+ZCwcncP5QUksAjhM3b7q3qriOkIKrh7+SF8uw0Y5O6JvySB4fxGVJq7dqdGq1i3MEWmvS6iyELFq5IACgOkpzZaPKeGpRmeHWdahGLalav3WF7nq1uBA836y//VI836w6ycrEFrPJ86g/rYIgcMlUUR2tv3nTF0rzKzE5unrk60YuxUFXBeVc8UVAsXNBALDYUptxgqFwb++Azx8KBoM4TlgsRofdVlNdPv1EnQ6yLHd29bk9Xr8/JIqCyWSyWoxVVeVGQ4rfn9lWwkT9dt7vpUwKIKb7NvKnBkVngq0eNdDmb30GM2lNX73G//jbCVOwNFc20uvqKEFiD3fzrQkcmQiOWb5zPaohzQ9s8T70p4SFBciFpbobV6d8y5kLh4bWkTjFi1N16YqiBTdcfpdeawSAxa4fm9iWjF8CANhzPRFGIUrKPEXrKU3Sr+R0a+fb7+46cvR4d8+APM0FqNfpVixfdNUVa6+79iqKSp1bxXH8u+/t3r33wLFPTkUiUwvuoChaXVW2auXSrVs2NtQndg7QWgNF64GNGMVoENejBo3tp3f7H3uL+6Rv8jCiKt/y4A14oQUAtBsXAYEFf/OBHJr0ihhquHG14d4rAAAhMNsPb/c/8V5sT+tkGcLzzZbvXE8uLAUAalGZ7Ud3+h57SxqbFLONINorF5q/fk3KuxvMMoZ015G3D5w4qxNYjbbLV17XULE0HvFVHHpjydj3M548zmnHv/ab7pj4tzo6bBCj9qIFBtNU95Usy2++teOll99q70grANNsMt56y5Z7P3+LPkl+VCTCPPvHV/766ruBYFoR5w31NXfetu36LRun70zhoNs90hnGtd26sxse3zbMNvfKvghq0JCLy+hFZbHmXr5lQGF4zGagV1bhRdZYU6fQ7VREBS8yay6pBRyJ7e8QR/wIBni5XbOuXvKF2cNdkjuEUCTVUEStquZbh7njfXIohho11LIKsq6YO9rNtY4oHI/ZjfSaBURZiu5mE8xKOBRFae8/OTzWT1Oa0oLK0vyqiUBATGGu7L0+ncAW9eXtqtzO4uNHElyRFoW6URQvr109JeKw6dAnjz7+dGdX30xfwG6zfusb923dsnHK43s/avrpw086x2Zsiq2oKP36V+6+etP6yQ8qitLfcUiS5VOGKglN8JMVOp2+R98Qh8/5uDRraswPbEUNNACArIRf2h/+ywFFOHubQHWU8b6rdNeMN50RxwK+n78hdJxzfiHriiwP3qCufyRjrqLPq/2/q/X8epaTOPWbmwsfmfg3jw+WxsYMJru96JyKxw8/8tRLf07QNM9hz1u+bGFBgd1iNnEcHwiG2tq7T7V0CNOqMNx5+7Z//O7X1CckSWLRwrq62iqzyUiSpD8QdDpdzZ+cdnsSHDinTAgA7pHOcNA9oCnwkVON1nyX0/Mvz2tQXK/VBcPhyWYxotJh/9ndCE0GnnqfeafZYjYBgD8QVCYF0pq+vFl/wyrJE3Y/+Bwe5U16Q5iJxmJn7c6YVW9/5AspDzjTmSvhuLJ3i0acVQtMBcE+KnslQp4t1xq/p+SXNuj0ZzuwcJxw2ZU3T9YtLGbTtq2bP7vt6oqKBN3IWZbbsXP//770elv72ZprKIru3/3XuAoyfcL6uprP3Xnj1ZvWU1SCQ0Rv7+Drb33w5ls7/IFgwgnjRMO+saG2EKHr0Rafc70kjz3wDD4WXlRfjyKIKIrHW1ulScWvDTdfQq+qdv/r/5YWFxfa7QDgdLkGRiZtDxia/8TfBX+3UzjWs7ShAcdxRVFOtrWx3Fl1kF5bm/evN09fvDpzYng2cq2zlAwA6DHfN1kyEFB0EoOgqFZ7zg5JknhxccHg4AgAGA36+794x523byPJpJomTVNbt2zcumXj9g/2PvrY026PDwCKiwtIEp8+od1m/e7ff+WazRtU1llZWfqdb93/9a/c86eX33jm2T+HwpEpE8bR6swIiuhFBgFFmWTz5U4NigMeg9mEIggA4DhOkQQTOysc0e2fCENeANBrxssVabXnKkmSHHmtiT3SpaUpHMcBAEEQmtZMFg62qVPyhDHbzDaPOREOMzuzLMXpBOmFXXnnbMtaiUUVhdIYpxTSQxDkicd/9MJLr1nMpttu3Wo2pfv+r7368ssuXfniS2/4A8HP3/nZCSVm8oR33XlD3HGVEooi7r37lhu2XfPyK29NmXB8WhSlaD3LhDUix+BnYw+59mEACIcjLMvSNB2KRGKxcw6AcpTj24YBwO316nU6BWC65ZQ7OQSKEotx4UjEoNfHODY8pQ2NovAdIxpbXZofzvia5+K2ssD7ZI0v82zPGFFysOSZCT00joPzF7Fus63kojCMJsTn6g94h4c1djd59rYY+p894VcOAAACCEEQgshPt24gJB4P7Ij76sRpHRdwm0H0hAEAQYDASUEQlGnZPZZvbdFenbhtTTLmZOeQ0QxrswAAizuain8zRTIAQCuxAEAnN29MJxAMn2pp6+sbCgRDsizrdbqSksLG+pqSksIMFjY0NNrS2jk87IxEoyiKmk3GioqSxYvqTcZ09ypKawAv6MTYZOHA7OP6qQJKsjINmM0ojvggkVjEQe0m8IQBQFEg6ST5MzYoz4lwRIhMCrMAQIhqPFb0WGyaZAAAJXEAQKaXx3Gg6dgfX/jrocPHpxvBAKCqsuzO27fdsPVqFdVkAp4XXn/z/T+98lZPT4KKHRiGrVm95O67blm3NnW0d3zx1LlZ9vSqagRFVWrcElX59Iqq+O6SDN3GxeKQJx5QmBDUoEkzNHAycyIcbu06DsujJLXOmtMZMWw95fi+lCQXgFIEBEHwJMX8JuA44Yc//uV77+8BgNramksvXVdVXRFFApIsmgiba8Rz+PDRw4eP/ufP/vvlv7z9yM++p76LDA6OfPef/qOruw/H8XXrLlm9eoWtMC8keHEU14G5u6tv//4DBw42HzjYvOW6qx76twfUpY3ASQRBKekc4cDsRt1nlkfeTtKDGEGM915JVudH3z9+jrV0EniZTbt5scyLwaeHPfYjAAAZr0lEQVQ/SPbShs+tnwgsTZ85yZVVEFxCNA5mX5rjGaLkeMFPeqz3JYwOBABCEfM5P0FpTJYUd4Tv/+AX2z/YW19f+8gjP33ggW9UN5Q/tfPhA507W0aOtbqOffYzN339/q/feONWn8/X1HR0z76mG7ZtJsnEAheORL745QcHBoevv/66X/3qF3fddTtHh36z4+fHBw+dHD7iZPv//v4H7/vCF9auXd3a2naw6ejQ8OimjZepLQ5BIkGXIgle0ixPSuGhllYIXaPi6DRvC4KYvniVduMihCbI+mL2QPtkC1gc3GHKe+h21KQlawvlQFQ4E7E8Gd1nlhvvWp/SzTaduUqkDtILEQSssRRN6mN4cZf1a6cK/n3yqXU6GpnP44M0rddPs5pPpuV0+88f/W1jY/1zzz1dWloCAL/6609O958ItsvMsIwapOaegzdcepvZZN68eWMoFP744yYNTa9Ynrgt0nP/88ruvQfvuedzDz30LwaDXpSEf/zt1yMhJtAi8SEQtOEx/8jlSzYXFhZs27blo48OHGw6umH9Grtdrd4cE/WLPBskDQJ69meAYKh2QyNq1ErDPjneQw5FqIYSywPXa69cCLKiiDJeYNZsaFBCMdEZiHcVRXWU7ppllge3YTajwgkIjtGra4hiqzDilwPj0UB4hcP0d5sNt6zNQDJgThOpO61f92jX1XifyGOOIHCOyHO4zaO9dEy30aW7XEFSb3eYIgEAmiocsOV0JwDcccet9Jk6pB3DrXxACXZIAIDRgNVFBl39NcV1AHD//fe88MJLp1qSRrKdbu0EgC9+8e74v8OewSgbifTLkQEZAGgH0jY47lPUaDR33nnbD37w45bTHY0Nav3qMBQHAHR6OjiG6ret1G9bKXnDcpjFbAZUQ0a2Hw/+YZfQ5wJJxvJNmkvrTH+3yfztLdJYADAUyzdJ7lDwf/awh7rkQBTBMaKuSL91Zf7j90mhmOyPYhYdappVatPcRl/66WWHi3+LKYyJPU1KAUQReCyPIYtjeNGMWjTGGxMjibwSk7FYzADQ0dF59hF9nlM7hlGILCiUFQUAk27chtbW1gEA1rykTgeLdXw2u90GABZDHgBQFgQQwCggtMjEVADQ0dEBAFZrKhcGigIAmryKBJZnwPIMcpRzf+9FvuVsNwFpLBh59VBsz+m8h24jqvIBgD3S7Xv4deVMlVJFlPiWQV/LoObyRsv/3YrNTizGFzv7KVIiIVqfZpVTv3nU8Bmvdk0ML55p804UZEiji/OGy1Y77HkvvvjyCy+8FI812bbuVoyEos1Y8TU4bUeuWnat3ZwPAM3Nn3zve/+OIMjNN14Xv1ZR5P6Ow/0dh5UzP+ubbrgWQZB/+7cfNDcfBwCj1nTl0mtoO1JyLVG0CUdJuO2KewBAUZTnn3/xpZdeyXfY1l+aIkgCRTAAQFP13/A/+qbcPrqgsmpxfZ3ZdFbgJF/E++8vyyFGGPD4fvaqmdIuqqtfUFkZN4zGie09HXp2j/r8aTKHxVtwOWKJHc2P7rYxTXZmv4Hr1IijCAI8ZpmpcOgkziRGaK1Jq1P7aeI4vnxZ4/s79u3atXf37n0IgiyvX7msbqUgCXaL4/q1N3927ecOHDj0q1898dhj/82y7He/8+VNG8fdp9GQ1znUzrHRvPzyeDh7fr5Nr9Ps2n3g9dff6ujoJAjyM5dtsxitgEJV0YL7r/tGpbX+vfc++OEP//P119/W63SPP/pQYWGKmNYYE+Ji4TChj2FJ4ze5E/2h5/cWOhwOWx6BEyaDftR1NlJfifGAQGx/u9jvblxQQ1GkhqZlSQ5HzwYq852juqsWofrZ5oDPiYXUEmuu8v/BzuxLWGuFxyw+zcoRw/Vu/eVyevc1sxCuYEaNlgJbQeq2iSOjrod/8dS+/Yfim4fBYLBYzASBh0Jh95kEkOqq8gf//iuXrFk2cdXoYKt7pJugtA3LznHfH2xq/sUvf9vTO27ksNvtRqNeEES/PxAOx42SyOXrL/mH7361qDB1GR33aHc4MNanLQwQSU1ngSe3R99tLnA4yoqKAIDj+ePnlkfGHSbJF1FEaVljY/yoNTg8POo+J7rA9OVN+htSx3qpk2WdA1HkBb4nqn2/g+S3VVLyF0R2FER2cFjeoPm2XvM96pWQACDuqVLSq4RUVOh47JGH+voGd+7++FhzS2//oM/nFQTRoNctW7pwYWPtFRvWrFyxeIrvIxxwA4DRPPULXnvJ8pdffOLI0ZN79jWdbu0cGhoZGhomCNxg0C9ZVLd82cJNV11aXp62fSle6lT1bi6O+gHA5fEQGEZR1ORtY3yAOxSP/urq6ytwODieH/NODeaVRmYZSQOQdeGo8T1Z7Xs6zcGU5K3xPlUW+HNn3lcGjberHFskBAWAhObOZFRUlN7/xTvu/2JagwWBY5kQABjMCY7KCIKsXrVk9aqZOSYSEn8LsqryFLdWybI8OJqkcC+KgKQAQIRhuvr6Eo/Bs/DNZlMh1fPd1b7fz/QqUvItdP10zfBXaDFp31ARwQBAmknt8BkR3zYQBNXp1awUs0cUBTjzdpJBVKVIcSaq7KghQbehc8bUpM6TTkk2haMwvH2KPSN9rLEj6/tvT2Y04zECAEQ+m+UfJxMJugFAZ7Bg2fjBqSDyLADwiJqVXbtxEWBq34vumuXaTWrbGGrS0peomVvSJJvCYWbVelakhJADq4a/YWOapj8lAyqgmCjysy/AmABFiYTcAKBufp09sixJkiAguKxqr8QLLYa71id7llpcrr16ieGOS/GSJJscgpi/do165kuaXICWGipgSmzF6LcT1objURIARCHLNTMAIMYERYGHJApHFolvG1wavWaMt60z3nPF9P1Ds642799uRlAU1VG2H91J1k0thYVqSOvfb9NcVp+VBWdzFxWmZcRnACazy0e/u7/sxSn1F2IopYMYF4uk6bVPn7jCQRCURju3KXQsGwEAFQvHWRDEcNs6zYaG2M5TfLdTESS8yKJZX0/WFnEn+sVhH6AoWWm3/+Tz7NEe9lCX6A4iNEnVFWk2L8mKbTRONoXDrV1bGH5n9vNohcEFvqdabf8w+cEoRtsA2Fgo68nT4WD8npJuNkfGcEwQAKJYCl1yArzAbPjc2fsLs7vF+fCTE041AMCLLOavXWv+1meyu84JsnlbcemuTGmxSJPSwMtTDi8RXAMAMSabBeMAQBJFJhIAAP2kStCiwMdm3Y9iOvHFR/FMDJeRVw/5H31Tw8lazVnZEkf83h/8mT2Q/QqtcbIpHAJm6rXck5WpMIUrCr11zuQowaO4yLPCtGImsyES9sadKeiZno+RkLfj5O7OUx9FkqeJZ4DIs6LA8SghqB5VEiL0jAWf21WY71hYV7eorq7QcVaOFVn2P/a2FEwcBzRLsqyQ9lrujZKVWZnKxkwNjAviegBgQjMLMFOHIEgMIwCgv+NI56mPOk991NN6QBR4DMMJIpv1aSNhLwAEiUx21shrh0BWzIbxaFPzuS2x5RjPvNc8+xVOJ8vCISHao4WPSWgWdEatONU+GCT1ABAJZ/MHrdVbqhvXUVoDAMSigfjdhNLoqxsvVcnVzoBoyAsAATyTOblTAwAQONPy0j+t9yV3MmlHutmQiUKqKEr3UNuoZ5Am6QJbaYm9fLIzPUpWHCt8dOXoA9Mrwc2I6fa0KKoRUQxiEZFncTJrP2taa6xdtCHkd0UjPgDQGaxGswPJXkd4ABB5lmMjIoozGSkccjgGAKMuVzAcVhSIsVNLAsnpdY6aKZkIx7sf/+WT9oMT/+q1xtWNG1Y0XEoR44c0j3bt4aInVo4+MJuCw0Fq6mFdQRAfYXJwvmBgLG/m/SL6+4ebDp/o6Ox1e3w+f0iv05qM+oqKkqVL6hYvqjNZC0zWcZNzJMqcONl+4mR7X99QMBSJRBmrxWS3Wepqqy5ZvaSsbMaFtoN+JwD4CIMyw1iFOJhFH6/nkaxSFGbJ8vE+zoxd9hEm9Os//Wh62Ra91rj5khsaK886wTXi8LLRfzazJzJb2fGC/xgxbJ3yICELjZE+DMHKFqxEUwWGxZFleefugy/++e3+/qQZmiRJXHXFmhu2bgKA19/8cPfeQ3zyPrEV5cV33bH1qisuSbMIjCxJA11HJUVqNVSoG86TEXjq/eg7aq0wTV/apE+jGMtMmbFwjLgHnn3zV8meXVS94rrLbpnouIOCWOl/ttr3DCbPrMSnR3vJ4eLfJIwJqowOm8SoraDKaEntWzrV0vGLx/4wNJRWX9IZUVpa+OB3vrSwMXU195Bv1DPWGyAMfdpMkqkAQBwLuL75eyVR+1IAwKz6/Ke+MlEhLovMOBJMUZRDLXuTPevyj3YOnF5Q1kiRNAAogPo1KwZNN+Eyr+e7UUirX6FXs+Z44cMSmthYJGKElQ9xbNRkKVDpCyYI4jPPvfLLXz0bDGbZNBInFIq8v+MjjueXLK5T2UJkWXINt8uyPKjNFzJNBET1NF5sjR3smF4ICtFSed+7FS+wJLxwlsxYOCiSPtV1lOWTakAMG2nvP1lT0qChx2+EEqpx69b3m++MEcW4HKFENwKJIzNieHFn3v9pdfyzhCa1AfMooZVZUmRRFKW1iQs0syz3wx//1/s7PkpZQHc2KIpyqqWzpbXrsnUrkqUzBTzDTMQfxHUualZ9n4gyG720XOh3yRMV0xGEWl5l/ZebyKq5qreZSZjg3mPbP/okaXJVHKPOfO/WbxoThXxiSswc+8TAd2rEMUr0yggpoRQDxWG81mdcIWOp9Xla4uqiAxiCllavwPCp30qUYR78p4czqPKTMQtqKn7xs3/UaacKtCjyQ93NkiK368tZNDvbvugMiIMeQBCiKj9ZI45skUmAsc1ScLR1v3pcFiew3UNti2tW4NOckApCxIjSAL3Uo72Mj9i0vaPW0y2WntOOnoPlra86Bj+mYn7GWCIRSX0QIopTkkhLMVFg9capPhGSICrKi8ZcXqczm/Xzk7GwccH9X7i1PNERxj3cyXOMjzRPr+aTMfFbDF5kzYpTXp0MA4z3Nb+/r/n9lMNqyxpv2XRfQs2AjPnrD//aMnYy4YUSRvUtvnNowdTTygSYItWHBwhFcBQtSBaH0d0zsP2Dj3bvafL5k7ZAj2M06NetXXrZpasAYP/HRw4cPB6vwaJCntV8xeVrrrtmQ1VlgvpBABAOuN2jnQKCtxkqpKxaTc4bGQqHKInPvP6oJ5C69cmW9bcvq10z5UFteGTpnh+SsRRBsKOVmzpWfTVZHoNJiFQyIyiGl1QuxQk1P/jAwMiJU+2DQ86xMTdzpliW2WS0Ws2V5cX19VWlJUXopJowsqwMDo20tnb3DYz4fIGJaoJaDV1Q4CgtKVi8sFbd2iEI3EjPcUkWe3TFIXxOjBDngcxTE9x+57NvPn62S0MSNJT2q7f84+Q2ljjPLN/5L9pwWr3sehffNVCftJhVGTNmFYIkrSsuX5wy5em8IcvySN9Jnot6SNOQJqers6uTeVKTTqM3660dAykqPImSAAhSWXS2jXvlqRfzRlMkWE9gcre6y9aLZGLNK4zr9CKDCTGBZ6YrH2kS6+3z797r33/A+8HOwP4D0bZ2tn8ApSnCkkl5RgBwj3TGmGAUo/t1M8v6zDVmFeyzsHoFw0Y+aErR9+9Y64HLlm6OG9dxPlzUvT39l0AVqbTttY5VX0v4rIwgvdqiushANOzzjPXa8mfiEJblsb++Nvrnv3JDiS2nVElx4e235N98I8xkT/KM9UZCHhHF+3RFmRnLc4fZpkMWO8pJguwb6VQZI8lioa3EZs4HAPvgAfvQQZXB09EwnqG6bcmKCMgIGsU1ZiEixEKyLGn16f7cu3/y85HnXpBCSU1kUigcONDEuz2WDapVNybhHesL+UYlBO3WFXNZOrteQLJwn75k0ZVbN9yBq9ZHGBrri/9h9KVVe3oyOB+mo0lTWgCAwegeXbGEoEHfiMfZk7Ce/BQUQfC8k9YG5nn7PUVMbdhVFMXj7An6RiQE69GVxNKw1uQ+2VHiFtesuuf6b8aLFCQkxo37VghuBv2YJyBjKa6KjssHFvI7nYOtspzi60QIwrwmLU+Vae0aJFUyiyyLzqHWkN8pIWiPrjj6qZAMyGKwT6Gt5Es3/d+1i65I6Cy1nonQVDLyLyhphPNHMU2nvpRHSSYaGO47xXMpIucW/OcPC26/BaWTnoFRmiq449YF//FD9Xl4LjrcdzIWCXAo0akv+9RIBsxFlr0/7G06ued0bzPLjftfbOaCe7d+kyZpAKg+8ceS9hQK7HQObvsNR6flm8AVqSI6opdiCIJYbKWmvGIV5xwAyBwfPHw43HxS8Pl4rxcAyLw8wmo1LF9iWr0KTVTPegJFUQKeoYB3SFGUCK7t1RZKaVQpuoiYq9rnsiKPugeDUb+W0pUWVGFnthPr2PHFe388o6kYY8nha385o0vyWW8B50NAoWi91VE+Fz2dYtGg19XHs1EFECedNzY7v1puMlepoSiCFjvKi2FqvJbfvpDTWKlUttHJjJWplR5PfAmdFyL1ZYwT2MjoQItWZ7Y4yig6O24qjo343AOxSAAAYig1oC1IK0/pIuR8d2RVULxv4R11R55MczyvsQwv2JLBC8VQqkNfZhKiRawbogGmN0DReqPFoTM6MmvjpchKNOILB5yxaBAABAR30lYvmaGh7KLgArTrdVZeZRk74Rjcn3KkgqCta74tZRSUCwCozAiK14n5beKwRRgioz7eExblIA4MhnAoioEcBZBA4kDmACRFDAMAghsAMEApwCgADFCdLEuSQgmITkGMOGqkUKufLPZQxRxgmExkJdQ+N7kgvZyR9lX/B5V424hay0gZJ9tWfzPgSFwkdAq4FNaKgzphWMMPasVhjTCkE4Y0QoL+eBMkM4bEReSc5QLg535SVoCJAt4CZozhJVGiOEaWMnhxhKwOkzUiNuPONznIXCmkqV9YkYs73y1vfQXnEzjHg7bGruX3R8zJQswVrTBkZluM7Gkjd9rAd5FSJuaTuYPHrGGyOkQ3hqjGAL2QIUouRifLBROOOLjA2EYOW5zHqagLF2M8bY6aKzzFa4J5UzuDkJIvL3bUyLYYudNm7vRskh7OPyJmCFCNIXphiGr0alby2MVxtLnAwpE+DZ6fZ9bTOtfoM9/Tan/wQq8iLXIlBiIls+xPmzsYuYvmjVwcwoEo8mzaWucUJrYtYXnWHOTiEA6d0D/TtKicBVMYrdB/oVeRFheHcBi5i0MxShMT23qhl5AWF4dwmD5lwnGRvJ0LYgSbMUY2809TBiTIGPysPsgafIzezxhjIh3lKVlGeYngRBIAwpwOAFgJBwAaEwFRDCQDABTOk5iAorKO5DQ4a9WFLJqImQ6Z6ahZE0aQDNPpLpaN8CIQDkSRTYmKT04hzOmGg/ahkH0o4BgO2kdCNn/MGGB1QcYgz4EBCgXFpA1b6IhFGyo0eEtM7mKzq8ToLjG79GSKUBIT24oospLzySwXgXAk1EbHwtY2T1mXu7Q/UDActA8H7UF2bnMDpyAD4meMfsYIvqkJLCY6Umxyl5jdZSZnjX2w3jaQbzjHCx3XSbNVH2vuuAiEI74Ju6Omdnd5u6u81V3eOlbpY7KWYJh1gqw+yOpPj5397nVUrNo6XOfob3D019n7K6yjJrZ1XjiyADPcu/n3v4ry6ZbvzEGinObEaM2J0fFiHjoy9qMvnYLcFe9xLgLhqNE0i9Ky1ONUwVDJTEfMmohZEzbTUQrnSExEECWuH2gIHsckHJUAQJQxUcJiAgkAEV6rKAgnErxEBlhdIGYIxPQBVi/JswoHFCWsRtN8ZJZvae7JdeFAFNkqtjbk938ykroNAIGKhSZvidFVbHaVGt0Og89ERyyasEkTNdPZdNQFWEMgpg/E9EFW7wpbB0P24YBjKOQYDeYJcuqPtCG/3yq05L5OmuvCEddGFxb0TBcOMx2utQ8ssA+VmFzFJnepacxh8Ks0XswiZjpspsMwrZyOrKBjYctQyDEctA8FHR2e0g5X2XRNeWFBz0Whk+a6cMS10cUF3QBgoKKV1tEJta7SMpqxpWGOQBG50OgtNHpXl5y1gU5Wpdtd5Z6oeXFhFwDkvk6a6y77uKeek8gwq7Xpsl+P/PzjiZoNNENhfO777nN+52BPAwCF8ZRurnp4nWcmRDz37aQ5rRClaRu9SInbSS/0KtTIaeH4NHnqp5P7vvucFo7c33hnSY777nNaOC4W13bG5PgbzGnhmI2n/qIgx7fG3BWOT7c2GifHddLcFY5PtzYaJ8d10twVjhzfcrNFLuukuSscMkL5NCsFLOcd25kiYEafZqWcw3Xlct18DgCEFNLz3UbutIHv0fPdJq51lg3CLggy4AxZFiarI1RNiGoIk9UxojjHE2gvAuGYAqJIWmFQJ/RrhCGtOKIRRmhhRCuOENLUtngXCgEzMXghSxTF8GKGKIoRxVGinCFKlYutKFSu+1amoyBYlKyIkhVTHsfliFYYocVRjTBMSn5SDhCin5SChBwgpQAhh7As7TcSSguokcfMAmrmMbOAm3nUzGOWGFHM4oUMUZStzssXnItPOJIhovoQVRuiapMNQGWWkoOEFACQMJnDFA4AcDmCgAKKgMvMpKm0gBAKIPGvWUIoCaUAMAEzc6hJRj899QLV+fQIR0pklI6hdAy/iCvVn2dy97QyzwVnXjjmScq8cMyTlHnhmCcp88IxT1LmhWOepMwLxzxJmReOeZIyLxzzJGVeOOZJyv8HdmXUdmENdVkAAAAASUVORK5CYII=" alt="Testa di Moro"></div>
+  </div>
+  <div class="hero-body">
+    <h1>Sicilia 2027</h1>
+    <div class="hero-meta">July 22 – August 5 · Family of 4 · 13 nights</div>
+    <div class="countdown-strip" id="countdown-strip">
+      <div class="cd-label" id="cd-label">Buon viaggio in</div>
+      <div id="cd-numwrap"><span class="cd-num" id="cd-days">--</span><span class="cd-unit" id="cd-unit">days</span></div>
+    </div>
+    <div class="chips">
+      <div class="chip"><b>Palermo</b> · Delle Vittorie</div>
+      <div class="chip"><b>Ortigia</b> · TBD</div>
+      <div class="chip"><b>Taormina</b> · Villa Taormina</div>
+    </div>
+    <div class="hero-tiles"></div>
+  </div>
+</div>
+
+<nav class="quick-links" id="quicknav">
+  <a class="ql region" href="javascript:void(0)" onclick="jumpToDay('palermo')">🏛 Palermo</a>
+  <a class="ql region" href="javascript:void(0)" onclick="jumpToDay('ortigia')">🌊 Ortigia</a>
+  <a class="ql region" href="javascript:void(0)" onclick="jumpToDay('taormina')">🌋 Taormina</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0722')">Jul 22</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0723')">23</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0724')">24</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0725')">25</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0726')">26</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0727')">27</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0728')">28</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0729')">29</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0730')">30</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0731')">31</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0801')">Aug 1</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0802')">2</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0803')">3</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0804')">4</a>
+  <a class="ql" href="javascript:void(0)" onclick="jumpToDay('d0805')">5</a>
+  <a class="ql ref" href="javascript:void(0)" onclick="jumpToDay('quickref')">⚡ Ref</a>
+</nav>
+
+<div class="container" id="main">
+
+<div class="island-label" id="palermo">🏛 Palermo — Delle Vittorie</div>
+<div class="weather-strip"><div class="wx-card"><canvas class="wx-canvas" id="sky-palermo"></canvas><div class="wx-loading" id="wx-load-palermo">Loading…</div><div class="wx-content" id="wx-palermo" style="display:none"></div></div></div>
+<div class="day" id="d0722">
+  <div class="day-head" onclick="toggleDay('d0722')">
+    <div class="date"><span class="dn">22</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Thursday · Day 1</div><div class="dlabel">Fly overnight ✈️</div>
+      <div class="strip"><span class="b b-travel">✈️ Travel</span><span class="b b-soon">⚠️ Flights</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">Night</div><div class="evb"><div class="evt"><span class="ic">✈️</span>EWR or PHL → PMO <span class="b b-travel">Overnight</span></div>
+      <div class="evn">Arrive Palermo the morning of Jul 23.<br><span class="warn">⚠️ Check EWR–PMO nonstop options for Jul 22; PHL likely needs a connection. Confirm summer 2027 schedules are bookable.</span></div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0723">
+  <div class="day-head" onclick="toggleDay('d0723')">
+    <div class="date"><span class="dn">23</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Friday · Day 2</div><div class="dlabel">Arrive Palermo 🏛</div>
+      <div class="strip"><span class="b b-booked">✅ Hotel</span><span class="b b-soon">⚠️ Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚕</span>Airport → hotel <span class="b b-travel">Travel</span></div>
+      <div class="evn">PMO → Delle Vittorie, Via Bari 52 (~30–45 min). Taxi or pre-booked transfer — Uber coverage in Sicily is limited. The hotel is inside the ZTL, so no driving in.</div></div></div>
+    <div class="ev"><div class="pill">12:00</div><div class="evb"><div class="evt"><span class="ic">🏨</span>Check-in — Delle Vittorie Luxury Suites &amp; Rooms <span class="b b-booked">✅ Booked</span></div>
+      <div class="evn">Suite Roof Top, 4 adults · res #10183 · arrival time on booking 12:00 · pay at the hotel.<br><span class="warn">⚠️ Ask about early check-in / bag drop — we land in the morning.</span></div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Afternoon wander</div>
+      <div class="evn">Mercato Ballarò, Quattro Canti, Palermo Cathedral.</div></div></div>
+    <div class="ev"><div class="pill">Aperitivo</div><div class="evb"><div class="evt"><span class="ic">🍸</span>Option — Seven Restaurant &amp; Rooftop Bar</div>
+      <div class="evn">7th floor of Hotel Ambasciatori, Via Roma 111 — fine as an arrival-day decompressor (full write-up on Jul 27). Reserve ahead.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Ferro di Cavallo <span class="b b-soon">⚠️ Book ahead</span></div>
+      <div class="evn">Via Venezia 20.</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0724">
+  <div class="day-head" onclick="toggleDay('d0724')">
+    <div class="date"><span class="dn">24</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Saturday · Day 3</div><div class="dlabel">Norman Palace + Monreale ✨</div>
+      <div class="strip"><span class="b b-soon">⚠️ Palace tickets</span><span class="b b-soon">⚠️ Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Norman Palace &amp; Palatine Chapel <span class="b b-soon">⚠️ Book ahead</span></div>
+      <div class="evn">UNESCO Arab-Norman palace; the Palatine Chapel has gold Byzantine mosaics on every surface. ~1.5 hrs. Sells out in summer.</div>
+      <a class="booking-link" href="https://www.coopculture.it" target="_blank" rel="noopener">↗ coopculture.it</a></div></div>
+    <div class="ev"><div class="pill">Midday</div><div class="evb"><div class="evt"><span class="ic">⛪</span>Cathedral of Monreale <span class="b b-star">⭐</span></div>
+      <div class="evn">~30 min from the center by taxi. 6,340 sq m of gold mosaics — one of the greatest achievements of Norman art. Cloister views over the Conca d'Oro valley.</div></div></div>
+    <div class="ev"><div class="pill">Aperitivo</div><div class="evb"><div class="evt"><span class="ic">🍸</span>Aperitivo, Palermo old town</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Osteria dei Vespri <span class="b b-star">⭐</span><span class="b b-soon">⚠️ Book 2–4 wks</span></div>
+      <div class="evn">18th-c Palazzo Valguarnera-Gangi — The Leopard ballroom. Piazza Croce dei Vespri 6.</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0725">
+  <div class="day-head" onclick="toggleDay('d0725')">
+    <div class="date"><span class="dn">25</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Sunday · Day 4</div><div class="dlabel">Day trip: Cefalù by train 🏖</div>
+      <div class="strip"><span class="b b-travel">🚆 Train</span><span class="b b-open">🔲 Tickets</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">Mid-AM</div><div class="evb"><div class="evt"><span class="ic">🚆</span>Palermo Centrale → Cefalù <span class="b b-travel">Train</span></div>
+      <div class="evn">~45–60 min, roughly hourly, mostly direct. Take a mid-morning train (arrive ~10:30–11:00), early-evening train back. Buy the mobile ticket in the Trenitalia app (QR code, no validation needed). Paper tickets must be validated before boarding. Cefalù station is a short walk to the old town, cathedral and beach.</div>
+      <a class="booking-link" href="https://www.trenitalia.com" target="_blank" rel="noopener">↗ trenitalia.com</a></div></div>
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">⛪</span>Norman Cathedral</div>
+      <div class="evn">UNESCO 12th-c cathedral — extraordinary Christ Pantocrator mosaic in the apse. Walk the narrow medieval streets. Allow ~2 hrs.</div></div></div>
+    <div class="ev"><div class="pill">Optional</div><div class="evb"><div class="evt"><span class="ic">🧗</span>La Rocca hike</div>
+      <div class="evn">~45 min up. Go early before the heat peaks.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏖</span>Spiaggia di Cefalù</div>
+      <div class="evn">Golden sand, clear water, steps from the old town.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Antica Focacceria San Francesco (back in Palermo)</div>
+      <div class="evn">Via A. Paternostro 58 · Elisabeth ✅</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0726">
+  <div class="day-head" onclick="toggleDay('d0726')">
+    <div class="date"><span class="dn">26</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Monday · Day 5</div><div class="dlabel">Agrigento + Villa Romana 🏛</div>
+      <div class="strip"><span class="b b-soon">⚠️ Driver / tour</span><span class="b b-soon">⚠️ Tickets</span><span class="b b-star">⭐ Must see</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">~6:30</div><div class="evb"><div class="evt"><span class="ic">🚐</span>Private driver or group tour <span class="b b-soon">⚠️ Book</span></div>
+      <div class="evn">Long day: ~2 hrs Palermo → Agrigento, ~45–60 min Agrigento → Piazza Armerina, ~2 hrs back. Leave ~6:30–7:00. Villa Romana isn't practical by train. Agrigento first (most exposed), Villa Romana in the afternoon. Bags stay at the hotel — nothing left in a car at either site.</div></div></div>
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Valley of the Temples, Agrigento <span class="b b-soon">⚠️ Book ahead</span></div>
+      <div class="evn">UNESCO — best-preserved Greek temples outside Greece. <span class="warn">⚠️ Go early — extremely hot and exposed in July.</span> Allow ~3 hrs. Start at the Temple of Juno gate (east, high point) and walk downhill; a shuttle runs between the two gates.</div>
+      <a class="booking-link" href="https://www.lavalledeitempli.it" target="_blank" rel="noopener">↗ lavalledeitempli.it</a></div></div>
+    <div class="ev"><div class="pill">Lunch</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Lunch <span class="b b-open">🔲 Open</span></div>
+      <div class="evn">Near Agrigento or Piazza Armerina.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Villa Romana del Casale, Piazza Armerina <span class="b b-star">⭐ Must see</span></div>
+      <div class="evn">UNESCO — the finest Roman floor mosaics in existence, 3,500 sq m. The famous "bikini girls", hunting scenes, mythological tableaux. Allow ~2–3 hrs.</div>
+      <a class="booking-link" href="https://www.villaromanadelcasale.it" target="_blank" rel="noopener">↗ villaromanadelcasale.it</a></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Dinner <span class="b b-open">🔲 Open</span></div>
+      <div class="evn">Back in Palermo late — likely light.</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0727">
+  <div class="day-head" onclick="toggleDay('d0727')">
+    <div class="date"><span class="dn">27</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Tuesday · Day 6</div><div class="dlabel">Palermo free day 🍋</div>
+      <div class="strip"><span class="b b-soon">⚠️ Seven Rooftop</span><span class="b b-open">🔲 Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🌅</span>Piazza Bellini + Quattro Canti area</div>
+      <div class="evn"><ul>
+        <li><b>La Martorana</b> — Byzantine-Norman mosaics, Mon–Sat 9:30–13:00, closed Sun. Go first.</li>
+        <li><b>San Cataldo</b> — Arab-Norman church, daily 10:00–14:00 &amp; 14:30–18:00.</li>
+        <li><b>Santa Caterina</b> — over-the-top Sicilian Baroque, daily 10:00–18:00.</li></ul></div></div></div>
+    <div class="ev"><div class="pill">Lunch</div><div class="evb"><div class="evt"><span class="ic">🍴</span>Capo Market street food</div>
+      <div class="evn">Mon–Sat 6:00–14:00, closed Sun — go before it winds down.</div></div></div>
+    <div class="ev"><div class="pill">Optional</div><div class="evb"><div class="evt"><span class="ic">🎭</span>Teatro Massimo</div>
+      <div class="evn">Daily 9:30–19:00. Rooftop, souvenirs.</div></div></div>
+    <div class="ev"><div class="pill">6–7 PM</div><div class="evb"><div class="evt"><span class="ic">🌅</span>Aperitivo — Seven Restaurant &amp; Rooftop Bar <span class="b b-soon">⚠️ Reserve</span></div>
+      <div class="evn">7th floor of Hotel Ambasciatori, Via Roma 111 — 360° views over Palermo's domes, the sea and Monte Pellegrino. Go at 6–7 PM for golden hour. Cocktails and something light — skip dinner here (food reviews are mixed). Smart casual. Elisabeth ✅ (vegetarian options).</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Dinner <span class="b b-open">🔲 Open</span></div>
+      <div class="evn">Osteria dei Vespri or Ferro di Cavallo if you didn't do them earlier, or repeat a favorite.</div></div></div>
+  </div>
+</div>
+
+<div class="island-label sea" id="ortigia">🌊 Ortigia — Hotel TBD</div>
+<div class="weather-strip"><div class="wx-card"><canvas class="wx-canvas" id="sky-ortigia"></canvas><div class="wx-loading" id="wx-load-ortigia">Loading…</div><div class="wx-content" id="wx-ortigia" style="display:none"></div></div></div>
+<div class="day" id="d0728">
+  <div class="day-head" onclick="toggleDay('d0728')">
+    <div class="date"><span class="dn">28</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Wednesday · Day 7</div><div class="dlabel">Palermo → Ortigia 🚗</div>
+      <div class="strip"><span class="b b-travel">🚗 Car pickup</span><span class="b b-soon">⚠️ Hotel not booked</span><span class="b b-soon">⚠️ Ranieri</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚗</span>Pick up rental car in Palermo <span class="b b-soon">⚠️ Book ahead</span></div>
+      <div class="evn">Office outside the ZTL — near Palermo Centrale or Politeama, not the airport. Book ahead for July. Keep the car through Aug 5 (drop-off at CTA). <span class="warn">⚠️ Check the one-way drop fee.</span></div></div></div>
+    <div class="ev"><div class="pill">Mid-AM</div><div class="evb"><div class="evt"><span class="ic">🚗</span>Drive Palermo → Ortigia (~3 hrs) <span class="b b-travel">Travel</span></div>
+      <div class="evn">Straight drive — leave mid-morning, arrive early afternoon.</div></div></div>
+    <div class="ev"><div class="pill">Check-in</div><div class="evb"><div class="evt"><span class="ic">🏨</span>Ortigia hotel <span class="b b-soon">⚠️ TBD</span></div>
+      <div class="evn">Algilà Ortigia Charme Hotel is the preferred pick — waiting on a refundable rate. Ortea Palace and Maniace are backups. Confirm ZTL plate registration and parking (Molo Sant'Antonio / Talete lots) with whichever hotel is chosen. See Quick Ref.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏝</span>Ortigia Walk (Rick Steves Sicily, pp. 298–308)</div>
+      <div class="evn">~1 hr, from Ponte Santa Lucia to the Fountain of Arethusa and the bay viewpoint. Cooler later in the afternoon.
+        <ul><li>Santa Lucia Bridge → Piazza Pancali → Temple of Apollo → Ortigia Street Market → Corso Matteotti → Via Cavour → Siracusa Cathedral → Piazza Duomo → Fountain of Arethusa → Bay Viewpoint</li>
+        <li class="warn">⚠️ Street market is Mon–Sat 7:00–14:00 (closed Sun) — it will be shut when we arrive. Walk past on the morning of Jul 29 or 30 to see it running.</li>
+        <li>Walk the perimeter sea walls.</li></ul></div></div></div>
+    <div class="ev"><div class="pill">Aperitivo</div><div class="evb"><div class="evt"><span class="ic">🍸</span>Spritzzeria</div>
+      <div class="evn">Sunset over the Mediterranean.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Ranieri <span class="b b-soon">⚠️ Reserve ~1 wk</span></div>
+      <div class="evn">Best seafood in Ortigia.</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0729">
+  <div class="day-head" onclick="toggleDay('d0729')">
+    <div class="date"><span class="dn">29</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Thursday · Day 8</div><div class="dlabel">Syracuse + Ortigia 🏛</div>
+      <div class="strip"><span class="b b-soon">⚠️ MOON</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Neapolis Archaeological Park</div>
+      <div class="evn">Greek Theatre of Syracuse (5th c BC, still used for summer performances) and Latomia del Paradiso with the Ear of Dionysius cave. ~2 hrs.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏝</span>Ortigia</div>
+      <div class="evn">Ceramics shopping, slow wander, sea walls at sunset.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🌿</span>MOON <span class="b b-soon">⚠️ Reserve ~1 wk</span></div>
+      <div class="evn">Celebrated vegan Sicilian — one of the best in Ortigia. Elisabeth's Ortigia dinner ✅</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0730">
+  <div class="day-head" onclick="toggleDay('d0730')">
+    <div class="date"><span class="dn">30</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Friday · Day 9</div><div class="dlabel">Noto + beach 🏖</div>
+      <div class="strip"><span class="b b-soon">⚠️ Mamma Iabica</span><span class="b b-open">🔲 Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚗</span>Ortigia → Noto (~30 min)</div></div></div>
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Noto</div>
+      <div class="evn">UNESCO Baroque — Corso Vittorio Emanuele and the Duomo di Noto. Allow ~2 hrs.</div></div></div>
+    <div class="ev"><div class="pill">Lunch</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Mamma Iabica, Noto <span class="b b-soon">⚠️ Book ahead</span></div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏖</span>Calamosche beach (or Lido di Noto)</div>
+      <div class="evn">Calamosche is ~20 min from Noto. Then back to Ortigia.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Dinner <span class="b b-open">🔲 Open</span></div>
+      <div class="evn">Ortigia repeat (MOON or Ranieri) or something new. Alternative for the day: Ragusa Ibla / Modica day trip.</div></div></div>
+  </div>
+</div>
+
+<div class="island-label lava" id="taormina">🌋 Taormina — Villa Taormina</div>
+<div class="weather-strip"><div class="wx-card"><canvas class="wx-canvas" id="sky-taormina"></canvas><div class="wx-loading" id="wx-load-taormina">Loading…</div><div class="wx-content" id="wx-taormina" style="display:none"></div></div></div>
+<div class="day" id="d0731">
+  <div class="day-head" onclick="toggleDay('d0731')">
+    <div class="date"><span class="dn">31</span><span class="dm">JUL</span></div>
+    <div class="dt"><div class="dname">Saturday · Day 10</div><div class="dlabel">Ortigia → Taormina 🌋</div>
+      <div class="strip"><span class="b b-booked">✅ Villa Taormina</span><span class="b b-travel">🚗 Drive</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚗</span>Check out · drive Ortigia → Taormina (~1.5 hrs) <span class="b b-travel">Travel</span></div></div></div>
+    <div class="ev"><div class="pill">14:00</div><div class="evb"><div class="evt"><span class="ic">🏨</span>Check-in — Villa Taormina <span class="b b-booked">✅ Booked</span></div>
+      <div class="evn">Jul 31–Aug 5, 5 nights · two Garden Rooms side by side · booking #12542 · breakfast included · arrival 14:00. Boutique hotel close to Corso Umberto, with a pool and garden.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Osteria Rosso Divino or Médousa Bistrot <span class="b b-soon">⚠️ Reserve</span></div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0801">
+  <div class="day-head" onclick="toggleDay('d0801')">
+    <div class="date"><span class="dn">1</span><span class="dm">AUG</span></div>
+    <div class="dt"><div class="dname">Sunday · Day 11</div><div class="dlabel">Greek Theatre + town 🏛</div>
+      <div class="strip"><span class="b b-soon">⚠️ Theatre tickets</span><span class="b b-soon">⚠️ Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">9:00</div><div class="evb"><div class="evt"><span class="ic">🏛</span>Teatro Antico di Taormina <span class="b b-star">⭐</span></div>
+      <div class="evn">3rd c BC Greek theatre with Etna as the backdrop. Cruise crowds flood it ~10:00–14:00 — arrive at 9:00 when it opens, or go about an hour before closing. Buy tickets online a day ahead.</div>
+      <a class="booking-link" href="https://www.aditusculture.com" target="_blank" rel="noopener">↗ aditusculture.com</a></div></div>
+    <div class="ev"><div class="pill">Midday</div><div class="evb"><div class="evt"><span class="ic">🌳</span>Villa Comunale + lunch at Al Giardino</div>
+      <div class="evn">Public gardens, a shaded stroll just off Corso Umberto — do it midday when it's hottest. Lunch at Al Giardino (Via Bagnoli Croci 84, across from the gardens). <span class="warn">⚠️ Mixed signals online (OpenTable says permanently closed; TheFork lists it open) — call +39 339 300 1720 before counting on it.</span></div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🍰</span>La Pignolata Guinness Cannoli (Da Onofrio) <span class="b b-star">⭐</span></div>
+      <div class="evn">Viale Arcageta 15, near Porta Catania. Cannoli made to order since 1978 — locals' pick for best in Taormina. Try the pistachio "Nutella" special. Elisabeth ✅ Closed Wednesdays, so today, not Aug 4.</div></div></div>
+    <div class="ev"><div class="pill">Late PM</div><div class="evb"><div class="evt"><span class="ic">🚶</span>Taormina Town Walk (Rick Steves Sicily, pp. 394–403)</div>
+      <div class="evn">~1.5 hrs along Corso Umberto, Porta Catania to Palazzo Corvaja, ending near the Teatro. Once it cools down.
+        <ul><li>Porta Catania → Via del Ghetto → Palazzo Duchi di Santo Stefano → Church of San Michele → Piazza Duomo → Piazza IX Aprile → Naumachie → Palazzo Corvaja</li>
+        <li>Cannoli stop: Laboratorio Pasticceria Roberto (#87 Corso Umberto)</li>
+        <li>No beach today — Isola Bella and the cable car are saved for Aug 3.</li></ul></div></div></div>
+    <div class="ev"><div class="pill">Aperitivo</div><div class="evb"><div class="evt"><span class="ic">🍸</span>Bar &amp; Chiostro, San Domenico Palace</div>
+      <div class="evn">Cocktails in the 17th-c colonnade courtyard.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Médousa Bistrot or Incanto (Villa Ducale) <span class="b b-soon">⚠️ Reserve</span></div>
+      <div class="evn">Incanto: rooftop terrace, sweeping bay and Etna views, contemporary Sicilian. Médousa: garden dining, botanical cocktails, Etna wine list.</div>
+      <a class="booking-link" href="https://www.sevenrooms.com/reservations/medousabistrot" target="_blank" rel="noopener">↗ Médousa</a><a class="booking-link" href="https://www.thefork.com" target="_blank" rel="noopener">↗ TheFork (Incanto)</a></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0802">
+  <div class="day-head" onclick="toggleDay('d0802')">
+    <div class="date"><span class="dn">2</span><span class="dm">AUG</span></div>
+    <div class="dt"><div class="dname">Monday · Day 12</div><div class="dlabel">Mt. Etna 🌋</div>
+      <div class="strip"><span class="b b-soon">⚠️ Etna tour</span><span class="b b-soon">⚠️ Principe Cerami</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🌋</span>Mt. Etna <span class="b b-soon">⚠️ Book ~1 wk ahead</span></div>
+      <div class="evn">Cable car (Funivia dell'Etna) to 2,500 m plus a guided walk to the summit craters. <span class="warn">⚠️ Bring a layer — cold at the summit even in summer. Check eruption status before booking.</span></div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏊</span>Rest at the hotel pool</div>
+      <div class="evn">After the early Etna start. No beach today — Aug 3 is the beach day.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Principe Cerami <span class="b b-star">⭐ Michelin</span><span class="b b-soon">⚠️ Book 2–4 wks</span></div>
+      <div class="evn">Views of the Greek Theatre and Taormina Bay. Via Santa Maria dei Greci 3. <span class="warn">⚠️ Confirm it's open on Mondays.</span></div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0803">
+  <div class="day-head" onclick="toggleDay('d0803')">
+    <div class="date"><span class="dn">3</span><span class="dm">AUG</span></div>
+    <div class="dt"><div class="dname">Tuesday · Day 13</div><div class="dlabel">Boat tour + Isola Bella 🚤</div>
+      <div class="strip"><span class="b b-soon">⚠️ Boat tour</span><span class="b b-open">🔲 Dinner</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚤</span>Sicily Active boat tour, Giardini Naxos <span class="b b-star">⭐</span><span class="b b-soon">⚠️ Book ahead</span></div>
+      <div class="evn">Departs Giardini Naxos port (~15 min drive). 2-hr small-group tour, max 12 guests: Isola Bella Marine Park, Blue Grotto, Lovers' Cave, Capo Taormina, Mazzarò Bay. Swim stop + drinks. Fills fast in summer.</div>
+      <a class="booking-link" href="https://www.sicilyactive.com" target="_blank" rel="noopener">↗ sicilyactive.com</a></div></div>
+    <div class="ev"><div class="pill">Lunch</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Ristorante Pizzichella</div>
+      <div class="evn">Casual Sicilian seafood right at Isola Bella beach. Can feel touristy.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏖</span>Isola Bella beach — the one beach day</div>
+      <div class="evn">Cable car to Mazzarò, then a 10-minute walk along the water to Isola Bella (cable car back up). The islet itself has little to see — the beach and the boat are the draw.</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>Osteria Rosso Divino or Armonia (Mazzarò) <span class="b b-soon">⚠️ Reserve</span></div>
+      <div class="evn">Armonia: seafront terrace at Mazzarò Sea Palace by the cable car base — a natural finish to the beach afternoon.</div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0804">
+  <div class="day-head" onclick="toggleDay('d0804')">
+    <div class="date"><span class="dn">4</span><span class="dm">AUG</span></div>
+    <div class="dt"><div class="dname">Wednesday · Day 14</div><div class="dlabel">Free day + final dinner 🍷</div>
+      <div class="strip"><span class="b b-soon">⚠️ Final dinner</span><span class="b b-star">🎂 Last night</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🌅</span>Slow morning</div>
+      <div class="evn">Breakfast at the hotel, pool, last gelato on Corso Umberto, final ceramics shopping.</div></div></div>
+    <div class="ev"><div class="pill">PM</div><div class="evb"><div class="evt"><span class="ic">🏊</span>Keep it loose</div>
+      <div class="evn">Pool time — no beach (Aug 3 was the beach day).</div></div></div>
+    <div class="ev"><div class="pill">Sunset</div><div class="evb"><div class="evt"><span class="ic">🌅</span>Castelmola <span class="b b-star">⭐</span></div>
+      <div class="evn">Hilltop village ~15 min drive above Taormina, views over Etna, the coast and the bay. Go by car or taxi (the hike is steep). Do Castelmola first, then stop at Madonna della Rocca on the way down — the turn-off is easier to spot descending (~10 min there).<br><b>Bar Turrisi</b> — Piazza Duomo 19. Sicily institution since 1947, four floors, famously phallic-themed decor. Order the almond wine (vino alla mandorla) and a cannolo, sit on the terrace for sunset over the Ionian. Elisabeth ✅</div></div></div>
+    <div class="ev"><div class="pill">Dinner</div><div class="evb"><div class="evt"><span class="ic">🍽</span>FINAL DINNER in Sicily <span class="b b-soon">⚠️ Book early</span></div>
+      <div class="evn">Last big meal of the trip — pick a place the kids will enjoy too. Send-off pour: Nero d'Avola or Etna Bianco.
+        <ul><li><b>Médousa Bistrot</b> — garden dining, Etna wine list</li>
+        <li><b>Principe Cerami</b> — if not done on Aug 2</li>
+        <li><b>Osteria Villa Zuccaro</b> — Corso Umberto 38, near Piazza Duomo. Seafood + meat, veg options confirmed. Terrace fills up. +39 0942 615056</li>
+        <li><b>Trattoria Da Nino</b> — Via Luigi Pirandello 37A. ~50-year local institution, housemade pasta (gnocchi alla Norma). No reservations for parties under 6.</li>
+        <li><b>Al Saraceno</b> — pasta with a view; saffron-and-prawn risotto is the standout</li>
+        <li><b>Ristorante Timeo</b> ⭐ — Michelin-starred, Grand Hotel Timeo, Greek Theatre backdrop. Splurge tier.</li></ul></div></div></div>
+  </div>
+</div>
+
+<div class="day" id="d0805">
+  <div class="day-head" onclick="toggleDay('d0805')">
+    <div class="date"><span class="dn">5</span><span class="dm">AUG</span></div>
+    <div class="dt"><div class="dname">Thursday · Day 15</div><div class="dlabel">Taormina → CTA → home ✈️</div>
+      <div class="strip"><span class="b b-travel">🚗 Drop car at CTA</span><span class="b b-soon">⚠️ Flights</span></div></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="day-body">
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🥐</span>Breakfast at the hotel</div>
+      <div class="evn">The last big meal was the Aug 4 dinner. Grab something at CTA before the flight.</div></div></div>
+    <div class="ev"><div class="pill">AM</div><div class="evb"><div class="evt"><span class="ic">🚗</span>Check out · drive to Catania (~45 min) · drop rental car at CTA <span class="b b-travel">Travel</span></div></div></div>
+    <div class="ev"><div class="pill">Flight</div><div class="evb"><div class="evt"><span class="ic">✈️</span>CTA → connecting hub → EWR or PHL</div>
+      <div class="evn">Connect via Rome FCO, London LHR or Frankfurt FRA. Allow 3+ hrs before departure for international check-in.</div></div></div>
+  </div>
+</div>
+
+<div class="ref-card" id="quickref">
+  <h2>⚡ Quick Ref</h2>
+
+  <div class="ref-sec">
+    <h3>⚠️ Still to book / decide</h3>
+    <ul>
+      <li><b>Ortigia hotel (Jul 28–31)</b> — Algilà preferred, won't book until there's a refundable rate with no full prepayment. Backups: Ortea Palace, Maniace. Confirm a room setup for 4 and ZTL/parking registration.</li>
+      <li>Flights: EWR/PHL → PMO Jul 22; CTA → EWR/PHL Aug 5 (via Rome, London or Frankfurt)</li>
+      <li>Palermo hotel: confirm breakfast inclusion and bed setup for 4 (booking says breakfast not included)</li>
+      <li>Rental car: Palermo pickup Jul 28 (outside ZTL), drop at CTA Aug 5 — check one-way fee</li>
+      <li>Palermo sights not yet placed: Capuchin Crypt (decide with the kids in mind), Salinas Archaeological Museum, Palazzo Abatellis, Oratory of San Lorenzo, Palazzo Chiaramonte Steri, Palazzo Conte Federico</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🎫 Advance booking</h3>
+    <ul>
+      <li>Norman Palace / Palatine Chapel — <a href="https://www.coopculture.it" target="_blank" rel="noopener">coopculture.it</a>, 1–2 wks ahead</li>
+      <li>Agrigento + Villa Romana — private driver or tour; <a href="https://www.lavalledeitempli.it" target="_blank" rel="noopener">Valley of the Temples</a> · <a href="https://www.villaromanadelcasale.it" target="_blank" rel="noopener">Villa Romana</a></li>
+      <li>Mt. Etna guided tour — ~1 wk ahead, check eruption status</li>
+      <li>Sicily Active boat tour — <a href="https://www.sicilyactive.com" target="_blank" rel="noopener">sicilyactive.com</a>, well ahead in summer</li>
+      <li>Teatro Antico di Taormina — <a href="https://www.aditusculture.com" target="_blank" rel="noopener">aditusculture.com</a>, a day ahead</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🍽 Restaurant booking flags</h3>
+    <ul>
+      <li>Jul 23 Ferro di Cavallo · Jul 24 Osteria dei Vespri (2–4 wks) · Jul 27 Seven Rooftop</li>
+      <li>Jul 28 Ranieri (~1 wk) · Jul 29 MOON (~1 wk) · Jul 30 Mamma Iabica</li>
+      <li>Jul 31 / Aug 3 Osteria Rosso Divino (~1 wk) · Médousa Bistrot · Incanto (Villa Ducale)</li>
+      <li>Aug 2 Principe Cerami (2–4 wks) · Aug 3 Armonia (Mazzarò) · Aug 4 final dinner</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🏨 Hotels</h3>
+    <ul>
+      <li><b>Palermo ✅ Delle Vittorie</b> — Via Bari 52 · Suite Roof Top, res #10183 · Jul 23–28 · free cancellation until Jul 9, 2027 · pay at hotel</li>
+      <li><b>Ortigia ⚠️ TBD</b> — Algilà: Via Vittorio Veneto 93 · <a href="tel:+390931465186">+39 0931 465 186</a> · <a href="https://www.algila.it" target="_blank" rel="noopener">algila.it</a></li>
+      <li><b>Taormina ✅ Villa Taormina</b> — Via Tommaso Fazzello 39 · <a href="tel:+390942620072">+39 0942 620072</a> · booking #12542 · Jul 31–Aug 5 · free cancellation until Jul 16, 2027 (balance charged that day)</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>📅 Timeline</h3>
+    <ul>
+      <li><b>Oct–Dec 2026</b> — book Ortigia</li>
+      <li><b>Spring 2027</b> — Etna tour, Agrigento/Villa Romana driver, Principe Cerami, Osteria dei Vespri, boat tour, rental car</li>
+      <li><b>Jul 9, 2027</b> — Delle Vittorie free cancellation ends</li>
+      <li><b>Jul 16, 2027</b> — Villa Taormina free cancellation ends</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🚗 Getting around</h3>
+    <ul>
+      <li><b>Palermo (Jul 23–28): no car.</b> Taxi or pre-booked transfer from PMO (Uber coverage is limited); hotel is inside the ZTL</li>
+      <li>Car Jul 28 → Aug 5. Never leave luggage in the car at tourist sites</li>
+      <li><b>Ortigia is ZTL:</b> ask the hotel to register the plate for luggage drop and which lot to use (Molo Sant'Antonio or Talete). Fallback: park at Molo Sant'Antonio on the mainland, ~5 min walk in</li>
+      <li>Taormina is very walkable; car needed for Etna and day trips</li>
+      <li>Autostrada tolls: keep cash or card ready · Many gas stations close 1–4 PM</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🥗 Vegetarian guide (Elisabeth)</h3>
+    <ul>
+      <li>✅ Pasta alla Norma, caponata, parmigiana di melanzane, panelle, pistachio pesto pasta, granita, cassata</li>
+      <li>Antipasto spreads are very veggie-friendly — always ask "senza carne"</li>
+      <li>MOON (Ortigia) is the standout veggie dinner of the trip</li>
+    </ul>
+  </div>
+
+  <div class="ref-sec">
+    <h3>🌡 Weather</h3>
+    <ul>
+      <li>Late July–early Aug: 30–36°C (86–97°F), hotter inland; Taormina is cooler thanks to elevation</li>
+      <li>Morning sightseeing is essential for exposed sites (Agrigento, Etna)</li>
+      <li>Best beach time: late afternoon or early morning</li>
+    </ul>
+  </div>
+</div>
+
+<footer>Sicilia 2027 · Buon viaggio 🍋</footer>
+</div>
+
+<div class="bottom-bar"><button class="map-btn" onclick="toggleMap()">🗺 Maps</button></div>
+
+<div class="map-outer" id="map-tab">
+  <div class="map-top">
+    <button class="map-tog active" id="mt-palermo" onclick="setMapRegion('palermo')">Palermo</button>
+    <button class="map-tog" id="mt-ortigia" onclick="setMapRegion('ortigia')">Ortigia</button>
+    <button class="map-tog" id="mt-taormina" onclick="setMapRegion('taormina')">Taormina</button>
+    <button class="map-close" onclick="toggleMap()">✕</button>
+  </div>
+  <iframe class="map-frame" id="map-frame" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="map-list" id="map-list"></div>
+</div>
+
+<script src="sicily-maps.js"></script>
+<script>
+// ---- Countdown (flight leaves Thu Jul 22, 2027, US Eastern) ----
+(function(){
+  function tick(){
+    var depart=new Date('2027-07-22T00:00:00-04:00');
+    var nextDay=new Date('2027-07-23T00:00:00-04:00');
+    var now=new Date();
+    var strip=document.getElementById('countdown-strip');
+    if(now>=nextDay){strip.style.display='none';return;}
+    if(now>=depart){
+      document.getElementById('cd-label').textContent='Buon viaggio! ✈️🌋';
+      document.getElementById('cd-numwrap').style.display='none';
+      return;
+    }
+    var days=Math.ceil((depart-now)/(1000*60*60*24));
+    document.getElementById('cd-label').textContent='Buon viaggio in';
+    document.getElementById('cd-numwrap').style.display='';
+    document.getElementById('cd-days').textContent=days;
+    document.getElementById('cd-unit').textContent=days===1?'day':'days';
+  }
+  tick();setInterval(tick,60000);
+})();
+
+// ---- Sky animation ----
+function SkyScene(canvasId, condition) {
+  var c=document.getElementById(canvasId), ctx=c.getContext('2d');
+  var clouds=[], drops=[], t=0;
+  function resize(){c.width=c.parentElement.offsetWidth;c.height=c.parentElement.offsetHeight;}
+  resize(); window.addEventListener('resize',resize);
+  var nClouds=condition==='sunny'?1:condition==='partly_cloudy'?2:4;
+  for(var i=0;i<nClouds;i++) clouds.push({x:Math.random()*c.width,y:20+Math.random()*c.height*.4,r:24+Math.random()*24,speed:.1+Math.random()*.1,op:condition==='sunny'?.2:.55+Math.random()*.25});
+  if(condition==='rain') for(var i=0;i<40;i++) drops.push({x:Math.random()*c.width,y:Math.random()*c.height,len:8+Math.random()*10,sp:4+Math.random()*3});
+  function draw(){
+    var w=c.width,h=c.height; ctx.clearRect(0,0,w,h);
+    var g=ctx.createLinearGradient(0,0,0,h);
+    if(condition==='sunny'){g.addColorStop(0,'#1a6bb5');g.addColorStop(1,'#7ecef4');}
+    else if(condition==='partly_cloudy'){g.addColorStop(0,'#2275b8');g.addColorStop(1,'#a0cce8');}
+    else if(condition==='cloudy'){g.addColorStop(0,'#556677');g.addColorStop(1,'#8899aa');}
+    else{g.addColorStop(0,'#3a4a5a');g.addColorStop(1,'#5a6a7a');}
+    ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    if(condition!=='rain'&&condition!=='cloudy'){
+      var op=condition==='partly_cloudy'?.7:1,cx=w*.72,cy=28,r=18;
+      var gl=ctx.createRadialGradient(cx,cy,r*.5,cx,cy,r*2.5);
+      gl.addColorStop(0,'rgba(255,230,100,'+(0.3*op)+')'); gl.addColorStop(1,'rgba(255,200,50,0)');
+      ctx.fillStyle=gl; ctx.beginPath(); ctx.arc(cx,cy,r*2.5,0,Math.PI*2); ctx.fill();
+      ctx.save(); ctx.translate(cx,cy); ctx.rotate(t*.008);
+      ctx.strokeStyle='rgba(255,220,80,'+(0.45*op)+')'; ctx.lineWidth=1.5;
+      for(var i=0;i<8;i++){ctx.rotate(Math.PI/4);ctx.beginPath();ctx.moveTo(r+4,0);ctx.lineTo(r+11,0);ctx.stroke();}
+      ctx.restore();
+      ctx.fillStyle='rgba(255,235,100,'+op+')'; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    }
+    clouds.forEach(function(cl){
+      cl.x+=cl.speed; if(cl.x-cl.r*2>w) cl.x=-cl.r*2;
+      ctx.save(); ctx.globalAlpha=cl.op; ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(cl.x,cl.y,cl.r,0,Math.PI*2); ctx.arc(cl.x+cl.r*.9,cl.y+cl.r*.1,cl.r*.75,0,Math.PI*2); ctx.arc(cl.x-cl.r*.6,cl.y+cl.r*.15,cl.r*.6,0,Math.PI*2); ctx.fill(); ctx.restore();
+    });
+    if(condition==='rain'){ctx.strokeStyle='rgba(180,210,255,.4)';ctx.lineWidth=1;drops.forEach(function(d){ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-2,d.y+d.len);ctx.stroke();d.y+=d.sp;if(d.y>h){d.y=-d.len;d.x=Math.random()*w;}});}
+    ctx.save(); ctx.globalAlpha=.12; ctx.strokeStyle='#fff'; ctx.lineWidth=1.5;
+    for(var i=0;i<3;i++){ctx.beginPath();var off=(t*.4+i*25)%w;for(var x=-40;x<w+40;x+=4){var y=h*.75+i*8+Math.sin((x+off)*.045)*3;x===-40?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();}
+    ctx.restore(); t++; requestAnimationFrame(draw);
+  }
+  draw();
+}
+function wmoDesc(code){
+  if(code===0) return{text:'Clear & Sunny',sky:'sunny',icon:'☀️'};
+  if(code<=2)  return{text:'Partly Cloudy',sky:'partly_cloudy',icon:'⛅'};
+  if(code<=3)  return{text:'Mostly Cloudy',sky:'cloudy',icon:'☁️'};
+  if(code<=55) return{text:'Drizzle',sky:'rain',icon:'🌦️'};
+  if(code<=65) return{text:'Rain',sky:'rain',icon:'🌧️'};
+  return{text:'Showers',sky:'rain',icon:'🌦️'};
+}
+var WX_LOCS=[
+  {id:'palermo',  label:'Palermo',  sub:'Centro Storico', lat:38.1157, lon:13.3615},
+  {id:'ortigia',  label:'Ortigia',  sub:'Siracusa',       lat:37.0630, lon:15.2930},
+  {id:'taormina', label:'Taormina', sub:'Corso Umberto',  lat:37.8516, lon:15.2853}
+];
+WX_LOCS.forEach(function(loc){
+  fetch('https://api.open-meteo.com/v1/forecast?latitude='+loc.lat+'&longitude='+loc.lon
+    +'&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m'
+    +'&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var cur=data.current, cond=wmoDesc(cur.weather_code);
+      var temp=Math.round(cur.temperature_2m), hum=Math.round(cur.relative_humidity_2m), wind=Math.round(cur.wind_speed_10m);
+      var tc=Math.round((cur.temperature_2m-32)*5/9);
+      document.getElementById('wx-load-'+loc.id).style.display='none';
+      var el=document.getElementById('wx-'+loc.id); el.style.display='block';
+      el.innerHTML='<div style="display:flex;align-items:center;gap:14px"><div class="wx-temp">'+temp+'°</div>'
+        +'<div class="wx-right"><div class="wx-desc">'+cond.icon+' '+cond.text+' · '+tc+'°C</div>'
+        +'<div class="wx-meta"><span class="wx-detail">'+loc.label+' · '+loc.sub+'</span>'
+        +'<span class="wx-detail">💧'+hum+'%</span><span class="wx-detail">💨'+wind+'mph</span></div></div></div>';
+      SkyScene('sky-'+loc.id, cond.sky);
+    })
+    .catch(function(){
+      document.getElementById('wx-load-'+loc.id).style.display='none';
+      var el=document.getElementById('wx-'+loc.id); el.style.display='block';
+      el.innerHTML='<div class="wx-desc" style="opacity:.6">Weather unavailable</div>';
+      SkyScene('sky-'+loc.id,'sunny');
+    });
+});
+
+// ---- Navigation ----
+function toggleDay(id){document.getElementById(id).classList.toggle('open');}
+function jumpToDay(id){
+  var el=document.getElementById(id); if(!el) return;
+  if(el.classList.contains('day')) el.classList.add('open');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+var navLinks=[].slice.call(document.querySelectorAll('.ql'));
+window.addEventListener('scroll',function(){
+  var days=[].slice.call(document.querySelectorAll('.day')), cur=null;
+  days.forEach(function(d){if(d.getBoundingClientRect().top<140) cur=d.id;});
+  navLinks.forEach(function(a){a.classList.toggle('active',cur&&a.getAttribute('onclick')==="jumpToDay('"+cur+"')");});
+  var act=document.querySelector('.ql.active'); if(act) act.scrollIntoView({inline:'center',block:'nearest'});
+},{passive:true});
+
+// ---- Maps ----
+var mapRegion='palermo';
+function toggleMap(){
+  var m=document.getElementById('map-tab');
+  var on=!m.classList.contains('active');
+  m.classList.toggle('active',on);
+  document.getElementById('main').style.display=on?'none':'';
+  if(on) setMapRegion(mapRegion); else window.scrollTo(0,0);
+}
+function mapSrc(q){return 'https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=15&output=embed';}
+function setMapRegion(r){
+  mapRegion=r;
+  ['palermo','ortigia','taormina'].forEach(function(x){document.getElementById('mt-'+x).classList.toggle('active',x===r);});
+  var list=document.getElementById('map-list'); list.innerHTML='';
+  var items=(window.SICILY_MAPS||{})[r]||[];
+  items.forEach(function(it,i){
+    var d=document.createElement('div'); d.className='map-item';
+    d.innerHTML='<div class="mn"><div class="mt">'+it.n+'</div><div class="ms">'+(it.note||'')+'</div></div>'
+      +'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(it.q)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Open</a>';
+    d.onclick=function(){document.getElementById('map-frame').src=mapSrc(it.q);};
+    list.appendChild(d);
+  });
+  if(items.length) document.getElementById('map-frame').src=mapSrc(items[0].q);
+}
+</script>
+</body>
+</html>
