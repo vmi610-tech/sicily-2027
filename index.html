@@ -714,12 +714,12 @@ function jumpToDay(id){
   if(el.classList.contains('day')) el.classList.add('open');
   el.scrollIntoView({behavior:'smooth',block:'start'});
 }
-var navLinks=[].slice.call(document.querySelectorAll('.ql'));
+var navLinks=[].slice.call(document.querySelectorAll('.ql')),lastAct=null;
 window.addEventListener('scroll',function(){
   var days=[].slice.call(document.querySelectorAll('.day')), cur=null;
   days.forEach(function(d){if(d.getBoundingClientRect().top<140) cur=d.id;});
   navLinks.forEach(function(a){a.classList.toggle('active',cur&&a.getAttribute('onclick')==="jumpToDay('"+cur+"')");});
-  var act=document.querySelector('.ql.active'); if(act) act.scrollIntoView({inline:'center',block:'nearest'});
+  var act=document.querySelector('.ql.active'),nav=document.getElementById('quicknav'); if(act&&nav&&act!==lastAct){lastAct=act;nav.scrollTo({left:act.offsetLeft-nav.clientWidth/2+act.offsetWidth/2,behavior:'smooth'});}
 },{passive:true});
 
 // ---- Maps ----
